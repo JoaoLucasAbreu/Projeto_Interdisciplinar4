@@ -56,53 +56,46 @@ def extrair_inteiro(texto):
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--incognito")
 driver = webdriver.Chrome()
-driver.get('https://www.latamairlines.com/br/pt/oferta-voos?origin=GRU&inbound=null&outbound=2022-12-01T15%3A00%3A00.000Z&destination=SSA&adt=1&chd=0&inf=0&trip=OW&cabin=Economy&redemption=false&sort=RECOMMENDED')
 
-# Cookie
-cookiebtn = WebDriverWait(driver, 10).until(
-	EC.presence_of_element_located((By.ID, "cookies-politics-button"))
-)
+lista = ['BSB','GIG','SSA','FLN','POA','REC','CWB','SDU','FOR','GYN','NVT','NAT','MCZ','FEN']
+for destinos in range(len(lista)):
+	driver.get(f'https://www.latamairlines.com/br/pt/oferta-voos?origin=GRU&inbound=null&outbound=2022-12-01T15%3A00%3A00.000Z&destination={lista[destinos]}&adt=1&chd=0&inf=0&trip=OW&cabin=Economy&redemption=false&sort=RECOMMENDED')
 
-cookiebtn.click()
+	# Cookie
+	cookiebtn = WebDriverWait(driver, 10).until(
+		EC.presence_of_element_located((By.ID, "cookies-politics-button"))
+	)
 
-# Tela 1
-# Origem
-origem = WebDriverWait(driver, 20).until(
-	EC.presence_of_element_located((By.ID, "undefined-dialog-open"))
-)
+	cookiebtn.click()
 
-origem.send_keys('São Paulo, GRU - Brasil')
-origem.send_keys(Keys.RETURN)
+	# Tela 1
+	# Origem
+	origem = WebDriverWait(driver, 20).until(
+		EC.presence_of_element_located((By.ID, "undefined-dialog-open"))
+	)
 
+	origem.send_keys('São Paulo, GRU - Brasil')
+	origem.send_keys(Keys.RETURN)
 
+	input = WebDriverWait(driver, 20).until(
+		EC.presence_of_element_located((By.CSS_SELECTOR, 'input[name="q"]'))
+	)
 
-input = WebDriverWait(driver, 20).until(
-	EC.presence_of_element_located((By.CSS_SELECTOR, 'input[name="q"]'))
-)
+	voos = WebDriverWait(driver, 20).until(
+		EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.rg_i'))
+	)
 
-input.send_keys('Montanha')
-input.send_keys(Keys.RETURN)
+	dados = []
 
-link_imagens = WebDriverWait(driver, 20).until(
-	EC.element_to_be_clickable((By.XPATH, "//a[text()='Imagens']"))
-)
-link_imagens.click()
+	""" for v in voos:
+		dados.append({
+			'destino': imagem.get_attribute('alt'),
+			'hsaida': int(imagem.get_attribute('width')),
+			'hchegada': int(imagem.get_attribute('height')),
+			'duracao':,
+			'valor':
+		}) """
 
-voos = WebDriverWait(driver, 20).until(
-	EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'img.rg_i'))
-)
+	print(dados)
 
-dados = []
-
-""" for v in voos:
-	dados.append({
-		'destino': imagem.get_attribute('alt'),
-		'hsaida': int(imagem.get_attribute('width')),
-		'hchegada': int(imagem.get_attribute('height')),
-		'duracao':,
-		'valor':
-	}) """
-
-print(dados)
-
-driver.close()
+	driver.close()
