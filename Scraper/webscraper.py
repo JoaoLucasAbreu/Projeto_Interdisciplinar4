@@ -1,5 +1,5 @@
 from os import link
-from pickle import TRUE
+from pickle import FALSE, TRUE
 import sys
 import time
 from tokenize import Double
@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+from selenium.common.exceptions import NoSuchElementException
 destinos = {}
 
 def __init__(self, link):
@@ -29,11 +29,6 @@ def extrair_inteiro(texto):
 		return int(sem_virgula)
 	except:
 		return 0 
-
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--incognito")
-driver = webdriver.Chrome()
-
 
 import sqlite3
 conn = sqlite3.connect('VOO_DB.db')
@@ -87,30 +82,57 @@ primary key(idDestino)
 conn.commit()
 conn.close()
 
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("--incognito")
+driver = webdriver.Chrome(options=chrome_options)
 
+cookie = False
 lista = ['BSB','GIG','SSA','FLN','POA','REC','CWB','SDU','FOR','GYN','NVT','NAT','MCZ','FEN']
 for destinos in lista:
 	driver.get(f'https://www.latamairlines.com/br/pt/oferta-voos?origin=GRU&inbound=null&outbound=2022-12-01T15%3A00%3A00.000Z&destination={destinos}&adt=1&chd=0&inf=0&trip=OW&cabin=Economy&redemption=false&sort=RECOMMENDED')
 	driver.maximize_window()
-	# Cookie
-	cookiebtn = WebDriverWait(driver, 40).until(
-		EC.presence_of_element_located((By.ID, "cookies-politics-button"))
-	)
-	cookiebtn.click()
+
+	# Verifica se há Cookie e aceita ele
+	if cookie == False:
+		cookiebtn = WebDriverWait(driver, 30).until(
+			EC.presence_of_element_located((By.ID, "cookies-politics-button"))
+		)
+		cookie = True
+		cookiebtn.click()
+
+	def check():
+		try:
+			driver.find_element(By.XPATH ,'//*[@id="itinerary-modal-0-dialog-open"]/span')
+			return FALSE
+		except NoSuchElementException:
+			return TRUE
+	
+	timer = FALSE
+	timer = check()
+	if timer == TRUE:
+		time.sleep(40)
+		print('tinha timer')
 
 	valor_final = 0
 	i=0
-	while TRUE:
-		tp_voo = driver.find_element(By.XPATH ,f'//*[@id="itinerary-modal-{i}-dialog-open"]/span').text
-		if tp_voo =="Direto":
-			valor = driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[2]/div[2]/div/div/div/span/span[2]').get_attribute('innerHTML')
-			print(valor)     
-			valor_final += float(valor.replace(',','.'))            							
-			i=i+1										
-		else:
-			break;	
+	while TRUE:		
+		try:			
+			tp_voo = driver.find_element(By.XPATH ,f'//*[@id="itinerary-modal-{i}-dialog-open"]/span').text
+			if tp_voo =="Direto":
+				valor = driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[2]/div[2]/div/div/div/span/span[2]').get_attribute('innerHTML')     
+				valor = valor.replace('.','')
+				valor = valor.replace(',','.')
+				valor_final += float(valor)   
+				duracao = driver.find_element(By.XPATH ,f'//*[@id="ContainerFlightInfo{i}"]/span[2]').get_attribute('innerHTML')     
+				print(duracao)								
+				i+=1									
+			else:
+				break;	
+		except NoSuchElementException:
+			break
+	if i >0:
+		valor_final /=i
 
-	valor_final /=i
 	print(f"Média de preço = {valor_final}")	
 	#//*[@id="itinerary-modal-0-dialog-open"]
 	#//*[@id="itinerary-modal-1-dialog-open"]
@@ -127,8 +149,7 @@ for destinos in lista:
 	#	}) """
 
 	#print(dados)
-	
-	driver.close()
+driver.close()
 
 	
 
