@@ -1,13 +1,13 @@
 create database if not exists inter4;
 
-create table voo (
+create table if not exists voo (
 idVoo int NOT NULL,
 duracao int NOT NULL,
 dataVoo datetime not null,
 primary key(idVoo)
 );
 
-create table passagem(
+create table if not exists passagem(
 idPassagem int not null,
 companhia varchar(20) not null,
 dataVisualizacao date not null,
@@ -19,7 +19,7 @@ primary key(idPassagem),
 FOREIGN KEY (idVoo_FK) REFERENCES voo(idVoo)
 );
 
-create table destino(
+create table if not exists destino(
 idDestino int not null,
 aeroporto varchar(3) not null,
 cidade varchar(50) not null,
@@ -28,7 +28,7 @@ chegada datetime not null,
 primary key(idDestino)
 );
 
-create table origem(
+create table if not exists origem(
 idOrigem int not null,
 aeroporto varchar(3) not null,
 cidade varchar(50) not null,
