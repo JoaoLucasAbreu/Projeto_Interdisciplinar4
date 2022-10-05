@@ -53,11 +53,9 @@ conn.close()
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--incognito")
 driver = webdriver.Chrome(options=chrome_options)
-
 cookie = False
 
-
-lista = ['RBR', 'MCZ', 'MCP', 'MAO', 'SSA', 'FOR', 'BSB', 'VIX', 'GYN', 'SLZ', 'CGB', 'CGR', 'CNF', 'BEL', 'JPA', 'CWB', 'REC', 'THE', 'SDU', 'NAT', 'POA', 'BVB', 'FLN', 'AJU', 'PMW']
+lista = ['RBR', 'MCZ', 'MAO', 'SSA', 'FOR', 'BSB', 'VIX', 'GYN', 'SLZ', 'CGB', 'CGR', 'CNF', 'BEL', 'JPA', 'CWB', 'REC', 'THE', 'SDU', 'NAT', 'POA','FLN', 'AJU', 'PMW']
 for destinos in lista:
 	driver.get(f'https://www.latamairlines.com/br/pt/oferta-voos?origin=GRU&inbound=null&outbound=2022-12-01T15%3A00%3A00.000Z&destination={destinos}&adt=1&chd=0&inf=0&trip=OW&cabin=Economy&redemption=false&sort=RECOMMENDED')
 	driver.maximize_window()
@@ -72,26 +70,21 @@ for destinos in lista:
 
 	def check():
 		try:
-			driver.find_element(By.XPATH ,'//*[@id="itinerary-modal-0-dialog-open"]/span')
+			WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH ,'//*[@id="itinerary-modal-0-dialog-open"]/span')))
 			return FALSE
 		except NoSuchElementException:
 			return TRUE
-	
-	timer = FALSE
 	timer = check()
-	if timer == TRUE:
-		time.sleep(40)
-		print('tinha timer')
 
 	#Selecionando os destinos e a origem e inserindo na tabela de voo
 	conn = sqlite3.connect('VOO_DB.db')
 	cursor = conn.cursor()
+	
 	origem= driver.find_element(By.XPATH ,'//*[@id="txtInputOrigin_field"]').get_attribute('value')
 	destino= driver.find_element(By.XPATH ,'//*[@id="txtInputDestination_field"]').get_attribute('value')
 	cursor.execute('INSERT INTO voo(origem, destino) VALUES (?,?)', (origem, destino))
 	conn.commit()
 	conn.close()
-
 
 	valor_final = 0
 	i=0
@@ -140,7 +133,6 @@ for destinos in lista:
 	dataVoo = driver.find_element(By.XPATH ,'//*[@id="departureDate"]').get_attribute('value')
 	
 	dataPesquisa = datetime.datetime.now().date()
-	print(dataPesquisa)
 	idVoo = cursor.execute('SELECT (idVoo) from voo WHERE destino = ?',[(destino)]).fetchone()
 	cursor.execute('INSERT INTO passagem(idVoo,companhia,media,dataVoo,dataPesquisa) VALUES (?,?,?,?,?)', (idVoo[0],companhia,valor_final,dataVoo,str(dataPesquisa)))
 	conn.commit()
@@ -160,15 +152,11 @@ for destinos in lista:
 		hSaida =  driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[1]/div[3]/span[1]').text
 		duracao =  driver.find_element(By.XPATH ,f'//*[@id="ContainerFlightInfo{i}"]/span[2]').text
 		preco =  driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[2]/div/div/span/span[2]').text
-		print(hChegada)
-		print(hSaida)
-		print(duracao)
-		print(preco)
 		cursor.execute('INSERT INTO tp_passagem(idPassagem,hSaida ,hChegada,duracao ,preco) VALUES (?,?,?,?,?)', (idPassagem[0],hSaida ,hChegada,duracao ,preco))
 		i= menorI
 		conn.commit()
 		conn.close()
-
+	print(valor_final)
 
 driver.close()
 
