@@ -6,19 +6,10 @@
 #
 # Além disso, o SQLAlchemy precisa de um driver do conexão ao banco. Isso depende do servidor
 # (MySQL, Postgres, SQL Server, Oracle...) e do driver real. Vamos utilizar o driver MySQL-Connector,
-# que também precisa ser instalado (de preferência com o VS Code fechado):
+# que também precisa ser inst   alado (de preferência com o VS Code fechado):
 # python -m pip install mysql-connector-python
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
-
-# Tabela utilizada nos exemplos:
-# 
-# CREATE TABLE pessoa (
-#   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-#   nome varchar(50) NOT NULL,
-#   email varchar(50) NOT NULL,
-#   UNIQUE KEY nome_UN (nome)
-# );
 
 # Como criar uma comunicação com o banco de dados:
 # https://docs.sqlalchemy.org/en/14/core/engines.html
@@ -27,7 +18,7 @@ from sqlalchemy.orm import Session
 # https://docs.sqlalchemy.org/en/14/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqlconnector
 #
 # mysql+mysqlconnector://<user>:<password>@<host>[:<port>]/<dbname>
-engine = create_engine('mysql+mysqlconnector://root:root@localhost/agenda')
+engine = create_engine('mysql+mysqlconnector://root:root@localhost/quando_eu_voo')
 
 # A função text(), utilizada ao longo desse código, serve para encapsular um comando
 # SQL qualquer, de modo que o SQLAlchemy possa entender!
@@ -65,7 +56,7 @@ def obterPessoa(id):
 		else:
 			print(f'\nid: {pessoa.id} / nome: {pessoa.nome} / email: {pessoa.email}')
 
-def criarPessoa(nome, email):
+def inserirVoo(origem, destino):
 	# É importante utilizar o método begin() para que a sessão seja comitada
 	# automaticamente ao final, caso não ocorra uma exceção!
 	# Isso não foi necessário nos outros exemplos porque nenhum dado estava sendo
@@ -74,17 +65,42 @@ def criarPessoa(nome, email):
 	# esse processo de commit() e rollback():
 	# https://docs.sqlalchemy.org/en/14/orm/session_basics.html#framing-out-a-begin-commit-rollback-block
 	with Session(engine) as sessao, sessao.begin():
-		pessoa = {
-			'nome': nome,
-			'email': email
+		voo = {
+			'origem': origem,
+			'destino': destino
 		}
 
-		sessao.execute(text("INSERT INTO pessoa (nome, email) VALUES (:nome, :email)"), pessoa)
+		sessao.execute(text("INSERT INTO voo (origem, destino) VALUES (:origem, :destino)"), voo)
 
 		# Para inserir, ou atualizar, vários registros ao mesmo tempo, a forma mais rápida
 		# é passar uma lista como segundo parâmetro:
 		# lista = [ ... ]
 		# sessao.execute(text("INSERT INTO pessoa (nome, email) VALUES (:nome, :email)"), lista)
+  
+def inserirPassagem(idVoo, companhia, media, dataVoo, dataPesquisa):
+	with Session(engine) as sessao, sessao.begin():
+		passagem = {
+			'idVoo': idVoo,
+			'companhia': companhia,
+            'media': media,
+            'dataVoo': dataVoo,
+            'dataPesquisa': dataPesquisa
+		}
+
+		sessao.execute(text("INSERT INTO passagem (idVoo, companhia, media, dataVoo, dataPesquisa) VALUES (:idVoo, :companhia, :media, :dataVoo, :dataPesquisa)"), passagem)
+
+def inserirTpPassagem(idPassagem, hSaida, hChegada, duracao, preco):
+	with Session(engine) as sessao, sessao.begin():
+		tpPassagem = {
+			'idPassagem': idPassagem,
+			'hSaida': hSaida,
+            'hChegada': hChegada,
+            'duracao': duracao,
+            'preco': preco
+		}
+
+		sessao.execute(text("INSERT INTO tp_passagem (idPassagem, hSaida, hChegada, duracao, preco) VALUES (:idPassagem, :hSaida, :hChegada, :duracao, :preco)"), tpPassagem)
+
 
 # O uso desse tipo de instrução é muito comum em Python!
 # Quando executamos um arquivo direto pela linha de comando, como

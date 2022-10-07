@@ -12,6 +12,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 import sqlite3
+from storage import *
 conn = sqlite3.connect('VOO_DB.db')
 cursor = conn.cursor()
 
