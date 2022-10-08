@@ -23,7 +23,7 @@ engine = create_engine('mysql+mysqlconnector://root:root@localhost/quando_eu_voo
 # A função text(), utilizada ao longo desse código, serve para encapsular um comando
 # SQL qualquer, de modo que o SQLAlchemy possa entender!
 
-def listarPessoas():
+def obterIdVssssssoo():
 	# O with do Python é similar ao using do C#, ou o try with resources do Java.
 	# Ele serve para limitar o escopo/vida do objeto automaticamente, garantindo
 	# que recursos, como uma conexão com o banco, não sejam desperdiçados!
@@ -40,21 +40,40 @@ def listarPessoas():
 		#for pessoa in pessoas:
 		#	print(f'\nid: {pessoa.id} / nome: {pessoa.nome} / email: {pessoa.email}')
 
-def obterPessoa(id):
+def obterIdVoo(destino):
 	with Session(engine) as sessao:
-		parametros = {
-			'id': id
+		parametro = {
+			'destino': destino
 		}
 
 		# Mais informações sobre o método execute e sobre o resultado que ele retorna:
 		# https://docs.sqlalchemy.org/en/14/orm/session_api.html#sqlalchemy.orm.Session.execute
 		# https://docs.sqlalchemy.org/en/14/core/connections.html#sqlalchemy.engine.Result
-		pessoa = sessao.execute(text("SELECT id, nome, email FROM pessoa WHERE id = :id"), parametros).first()
+		idVoo = sessao.execute(text("SELECT idVoo FROM voo WHERE destino = :destino"), parametro).first()
 
-		if pessoa == None:
-			print('Pessoa não encontrada!')
+		if idVoo == None:
+			print('Voo não encontrada!')
 		else:
-			print(f'\nid: {pessoa.id} / nome: {pessoa.nome} / email: {pessoa.email}')
+			return idVoo
+
+def obterIdPassagem(idVoo, dataPesquisa):
+	with Session(engine) as sessao:
+		parametros = {
+			'idVoo': idVoo,
+			'dataPesquisa': dataPesquisa
+		}
+
+		# Mais informações sobre o método execute e sobre o resultado que ele retorna:
+		# https://docs.sqlalchemy.org/en/14/orm/session_api.html#sqlalchemy.orm.Session.execute
+		# https://docs.sqlalchemy.org/en/14/core/connections.html#sqlalchemy.engine.Result
+		IdPassagem = sessao.execute(text("SELECT idPassagem FROM passagem WHERE idVoo = :idVoo AND dataPesquisa = :dataPesquisa"), parametros).first()
+
+		if IdPassagem == None:
+			print('Passagem não encontrada!')
+		else:
+			return IdPassagem
+
+
 
 def inserirVoo(origem, destino):
 	# É importante utilizar o método begin() para que a sessão seja comitada
@@ -109,8 +128,8 @@ def inserirTpPassagem(idPassagem, hSaida, hChegada, duracao, preco):
 # que a execução do programa se deu a partir daquele arquivo, e não de outro.
 # Quando o arquivo é importado, __name__ valerá o nome do arquivo sem a extensão
 # .py, como 'exemplo_sql'
-if __name__ == '__main__':
-	listarPessoas()
+#if __name__ == '__main__':
+#	listarPessoas()
 
 # Para mais informações:
 # https://docs.sqlalchemy.org/en/14/tutorial/dbapi_transactions.html
