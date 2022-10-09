@@ -16,6 +16,7 @@ from storage import *
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--incognito")
 driver = webdriver.Chrome(options=chrome_options)
+
 cookie = False
 
 lista = ['RBR', 'MCZ', 'MAO', 'SSA', 'FOR', 'BSB', 'VIX', 'GYN', 'SLZ', 'CGB', 'CGR', 'CNF', 'BEL', 'JPA', 'CWB', 'REC', 'THE', 'SDU', 'NAT', 'POA','FLN', 'AJU', 'PMW']
@@ -87,7 +88,8 @@ for destinos in lista:
 	
 	#Inserindo dados gerais sobre a passagem 
 	companhia = 'LATAM'
-	dataVoo = driver.find_element(By.XPATH ,'//*[@id="departureDate"]').get_attribute('value')
+	# dataVoo = driver.find_element(By.XPATH ,'//*[@id="departureDate"]').get_attribute('value')
+	dataVoo = '2022-12-01'
 	
 	dataPesquisa = datetime.datetime.now().date()
 	idVoo = obterIdVoo(destino)
@@ -100,8 +102,19 @@ for destinos in lista:
 		hChegada = driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[1]/div[1]/span[1] ').text
 		hSaida =  driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[1]/div[3]/span[1]').text
 		duracao =  driver.find_element(By.XPATH ,f'//*[@id="ContainerFlightInfo{i}"]/span[2]').text
+		
+		h1 = duracao[0:2].strip()
+		h2 = duracao[-7:-5].replace(" ", "0")
+
+		if len(h1) == 1:
+			h1 = '0' + h1
+
+		duracao = h1 +':' + h2
+  
 		preco =  driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[2]/div/div/span/span[2]').text
-		inserirTpPassagem(idPassagem[0],hSaida ,hChegada, duracao ,preco)
+		preco = preco.replace('.','')
+		preco = preco.replace(',','.')
+		inserirTpPassagem(idPassagem[0],hSaida ,hChegada, duracao ,float(preco))
 		i = menorI
   
 	print(valor_final)
