@@ -4,8 +4,8 @@ USE quando_eu_voo;
 -- DROP TABLE IF EXISTS voo;
 CREATE TABLE voo (
   idVoo int NOT NULL AUTO_INCREMENT,
-  origem VARCHAR(30) NOT NULL,
-  destino VARCHAR(30) NOT NULL,
+  origem VARCHAR(40) NOT NULL,
+  destino VARCHAR(40) NOT NULL,
   PRIMARY KEY (idVoo)
 );
 

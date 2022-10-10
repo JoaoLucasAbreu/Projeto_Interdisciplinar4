@@ -30,8 +30,8 @@ for destinos in lista:
 		cookiebtn = WebDriverWait(driver, 30).until(
 			EC.presence_of_element_located((By.ID, "cookies-politics-button"))
 		)
-	cookie = True
-	cookiebtn.click()
+		cookie = True
+		cookiebtn.click()
 
 	def check():
 		try:
@@ -42,10 +42,12 @@ for destinos in lista:
 	timer = check()
 
 	#Selecionando os destinos e a origem e inserindo na tabela de voo
-	origem= driver.find_element(By.XPATH ,'//*[@id="txtInputOrigin_field"]').get_attribute('value')
+	# origem= driver.find_element(By.XPATH ,'//*[@id="txtInputOrigin_field"]').get_attribute('value')
+	# origem = 'São Paulo, GRU - Brasil'
 	destino= driver.find_element(By.XPATH ,'//*[@id="txtInputDestination_field"]').get_attribute('value')
-	inserirVoo(origem, destino)
-
+	# inserirVoo(origem, destino)
+	# print(destino)
+	
 	valor_final = 0
 	i=0
 	try:
@@ -101,8 +103,9 @@ for destinos in lista:
 	for j in range(2):
 		hChegada = driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[1]/div[1]/span[1] ').text
 		hSaida =  driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[1]/div[3]/span[1]').text
+		if "+" in hSaida:
+			hSaida = hSaida[:-2]
 		duracao =  driver.find_element(By.XPATH ,f'//*[@id="ContainerFlightInfo{i}"]/span[2]').text
-		
 		h1 = duracao[0:2].strip()
 		h2 = duracao[-7:-5].replace(" ", "0")
 
@@ -118,5 +121,6 @@ for destinos in lista:
 		i = menorI
   
 	print(valor_final)
+	
 
 driver.close()
