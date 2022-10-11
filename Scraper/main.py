@@ -1,8 +1,11 @@
 from ast import main
-import webscraper as wbs
+import webscraper_ltm as latam
+#import webscraper_gol as gol
 
 def main():
-    wbs('https://www.latamairlines.com/br/pt')
+    lista = ['RBR', 'MCZ', 'MAO', 'SSA', 'FOR', 'BSB', 'VIX', 'GYN', 'SLZ', 'CGB', 'CGR', 'CNF', 'BEL', 'JPA', 'CWB', 'REC', 'THE', 'SDU', 'NAT', 'POA','FLN', 'AJU', 'PMW']
+    latam.main(lista)
+    #gol.main(lista)
 
-if __name__ == '__main___':
-    main()
+#if __name__ == '__main___':
+main()
