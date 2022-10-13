@@ -52,7 +52,7 @@ def obterIdVoo(destino):
 		idVoo = sessao.execute(text("SELECT idVoo FROM voo WHERE destino = :destino"), parametro).first()
 
 		if idVoo == None:
-			print('Voo não encontrada!')
+			print('Voo não encontrado!')
 		else:
 			return idVoo
 
