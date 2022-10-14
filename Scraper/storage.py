@@ -56,6 +56,22 @@ def obterIdVoo(destino):
 		else:
 			return idVoo
 
+def obterIdVooGol(destino):
+	with Session(engine) as sessao:
+		parametro = {
+			'destino': destino
+		}
+
+		# Mais informações sobre o método execute e sobre o resultado que ele retorna:
+		# https://docs.sqlalchemy.org/en/14/orm/session_api.html#sqlalchemy.orm.Session.execute
+		# https://docs.sqlalchemy.org/en/14/core/connections.html#sqlalchemy.engine.Result
+		idVoo = sessao.execute(text("SELECT idVoo FROM voo WHERE LOCATE(:destino, destino) > 0"), parametro).first()
+		
+		if idVoo == None:
+			print('Voo não encontrado!')
+		else:
+			return idVoo
+
 def obterIdPassagem(idVoo, dataPesquisa):
 	with Session(engine) as sessao:
 		parametros = {

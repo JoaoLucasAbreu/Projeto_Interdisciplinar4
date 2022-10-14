@@ -26,24 +26,26 @@ def main(lista):
 		# Verifica se há Cookie e aceita ele
 		if cookie == False:
 			cookiebtn = WebDriverWait(driver, 30).until(
-				EC.presence_of_element_located((By.ID, "cookies-politics-button"))
+				EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))
 			)
 			cookie = True
 			cookiebtn.click()
 
-		def check():
+		""" def check():
 			try:
 				WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH ,'//*[@id="itinerary-modal-0-dialog-open"]/span')))
 				return FALSE
 			except NoSuchElementException:
 				return TRUE
-		timer = check()
+		timer = check() """
 
 		#Selecionando os destinos e a origem e inserindo na tabela de voo
 		# origem= driver.find_element(By.XPATH ,'//*[@id="txtInputOrigin_field"]').get_attribute('value')
 		# origem = 'São Paulo, GRU - Brasil'
-		destino= driver.find_element(By.XPATH ,'//*[@id="txtInputDestination_field"]').get_attribute('value')
-		# inserirVoo(origem, destino)
+		destino= driver.find_element(By.XPATH ,'/html/body/app-root/b2c-flow/main/b2c-select-flight/div/section/form/div[1]/div/div[1]/b2c-bar-product/div[2]/p[2]/span[2]').text
+		destino = destino[:3]
+		print(destino)
+  		# inserirVoo(origem, destino)
 		# print(destino)
 		
 		valor_final = 0
@@ -87,12 +89,12 @@ def main(lista):
 			valor_final /=i
 		
 		#Inserindo dados gerais sobre a passagem 
-		companhia = 'LATAM'
+		companhia = 'GOL'
 		# dataVoo = driver.find_element(By.XPATH ,'//*[@id="departureDate"]').get_attribute('value')
 		dataVoo = '2022-12-01'
 		
 		dataPesquisa = datetime.datetime.now().date()
-		idVoo = obterIdVoo(destino)
+		idVoo = obterIdVooGol(destino)
 		inserirPassagem(idVoo[0],companhia,valor_final,dataVoo,str(dataPesquisa))
 
 		idPassagem = obterIdPassagem(idVoo[0], str(dataPesquisa))
