@@ -16,6 +16,7 @@ from storage import *
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--incognito")
+chrome_options.add_argument("--force-device-scale-factor=0.5")
 driver = webdriver.Chrome(options=chrome_options)
 
 def main(lista):
@@ -45,7 +46,8 @@ def main(lista):
 		#Selecionando os destinos e a origem e inserindo na tabela de voo
 		# origem= driver.find_element(By.XPATH ,'//*[@id="txtInputOrigin_field"]').get_attribute('value')
 		# origem = 'São Paulo, GRU - Brasil'
-		destino= driver.find_element(By.XPATH ,'//*[@id="txtInputDestination_field"]').get_attribute('value')
+		destino = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH ,'//*[@id="txtInputDestination_field"]')))
+		destino= destino.get_attribute('value')
 		# inserirVoo(origem, destino)
 		# print(destino)
 		
@@ -100,6 +102,9 @@ def main(lista):
 		i = maiorI 
 		for j in range(2):
 			hSaida = driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[1]/div[1]/span[1]').text
+			if hSaida == '' or hSaida == ':': 
+				print("ERRO")
+    
 			hChegada =  driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[1]/div[3]/span[1]').text
    
 			if "+" in hChegada:
