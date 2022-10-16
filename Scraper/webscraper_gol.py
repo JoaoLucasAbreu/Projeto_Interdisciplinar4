@@ -22,7 +22,8 @@ def main(lista):
 	for destinos in lista:
 		driver.get(f'https://b2c.voegol.com.br/compra/busca-parceiros?pv=br&tipo=DF&de=GRU&para={destinos}&ida=01-12-2022&ADT=1&CHD=0&INF=0')
 		driver.maximize_window()
-
+		time.sleep(7)
+  
 		# Verifica se há Cookie e aceita ele
 		if cookie == False:
 			cookiebtn = WebDriverWait(driver, 30).until(
@@ -30,99 +31,72 @@ def main(lista):
 			)
 			cookie = True
 			cookiebtn.click()
-
-		""" def check():
-			try:
-				WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH ,'//*[@id="itinerary-modal-0-dialog-open"]/span')))
-				return FALSE
-			except NoSuchElementException:
-				return TRUE
-		timer = check() """
-
-		#Selecionando os destinos e a origem e inserindo na tabela de voo
-		# origem= driver.find_element(By.XPATH ,'//*[@id="txtInputOrigin_field"]').get_attribute('value')
-		# origem = 'São Paulo, GRU - Brasil'
-		destino= driver.find_element(By.XPATH ,'/html/body/app-root/b2c-flow/main/b2c-select-flight/div/section/form/div[1]/div/div[1]/b2c-bar-product/div[2]/p[2]/span[2]').text
-		destino = destino[:3]
-		print(destino)
-  		# inserirVoo(origem, destino)
-		# print(destino)
 		
-		valor_final = 0
-		i=0
-		try:
-			maior = driver.find_element(By.XPATH ,'//*[@id="WrapperCardFlight0"]/div/div[2]/div[2]/div/div/div/span/span[2]').get_attribute('innerHTML')
-			menor = driver.find_element(By.XPATH ,'//*[@id="WrapperCardFlight0"]/div/div[2]/div[2]/div/div/div/span/span[2]').get_attribute('innerHTML')
-			maior = maior.replace('.','')
-			maior = maior.replace(',','.')
-			menor = menor.replace('.','')
-			menor = menor.replace(',','.')
-			maiorI = 0
-			menorI = 0
-		except NoSuchElementException:
-				break
-
-		while TRUE:		
-			try:			
-				tp_voo = driver.find_element(By.XPATH ,f'//*[@id="itinerary-modal-{i}-dialog-open"]/span').text
-				if tp_voo =="Direto":				
-					valor = driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[2]/div[2]/div/div/div/span/span[2]').get_attribute('innerHTML')     
-					valor = valor.replace('.','')
-					valor = valor.replace(',','.')
-
-					if float(valor) > float(maior):
-						maior = float(valor)
-						maiorI = i
-
-					if float(valor) < float(menor):
-						menor = float(valor)	
-						menorI = i
-
-					valor_final += float(valor)   
-					duracao = driver.find_element(By.XPATH ,f'//*[@id="ContainerFlightInfo{i}"]/span[2]').get_attribute('innerHTML')     							
-					i+=1		
-				else:
-					break;	
-			except NoSuchElementException:
-				break
-		if i >0:
-			valor_final /=i
-		
-		#Inserindo dados gerais sobre a passagem 
-		companhia = 'GOL'
-		# dataVoo = driver.find_element(By.XPATH ,'//*[@id="departureDate"]').get_attribute('value')
-		dataVoo = '2022-12-01'
-		
-		dataPesquisa = datetime.datetime.now().date()
-		idVoo = obterIdVooGol(destino)
-		inserirPassagem(idVoo[0],companhia,valor_final,dataVoo,str(dataPesquisa))
-
-		idPassagem = obterIdPassagem(idVoo[0], str(dataPesquisa))
-
-		i = maiorI
-		for j in range(2):
-			hSaida = driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[1]/div[1]/span[1]').text
-			hChegada =  driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[1]/div[3]/span[1]').text
+		# Iterar por div com o mesmo XPATH (Cards de voos)
+		vDiretos = []
+		cards = driver.find_elements(By.XPATH ,'/html/body/app-root/b2c-flow/main/b2c-select-flight/div/section/form/div')
+		for c in cards:
+			tp_voo = c.find_element(By.XPATH ,'./div/div[1]/b2c-bar-product/div[2]/p[4]/a').get_attribute('innerHTML')
+			if tp_voo.strip() == 'Direto':
+				preco = WebDriverWait(c, 20).until(EC.presence_of_element_located((By.XPATH ,'./div/div[1]/b2c-bar-product/div[2]/p[5]/span[3]'))).text
+				preco = preco[2:]
+				preco = preco.replace('.','')
+				preco = preco.replace(',','.')
+				
+				duracao =  WebDriverWait(c, 20).until(EC.presence_of_element_located((By.XPATH ,'./div/div[1]/b2c-bar-product/div[2]/p[3]/span[2]'))).text
+				hSaida =  WebDriverWait(c, 20).until(EC.presence_of_element_located((By.XPATH ,'./div/div[1]/b2c-bar-product/div[2]/p[1]/span[2]'))).text
+				hSaida = hSaida[6:]
+				hChegada =  WebDriverWait(c, 20).until(EC.presence_of_element_located((By.XPATH ,'./div/div[1]/b2c-bar-product/div[2]/p[2]/span[2]'))).text
+				hChegada = hChegada[6:]
+				#print(duracao)
+				#print(hSaida)
+				#print(hChegada)
+				print(preco.strip())
+				v = [float(preco.strip()), hSaida, hChegada, duracao]
+				vDiretos.append(v)
+  
+		if len(vDiretos) == 1:
+			media = vDiretos[0][0]
+			indexMenor = 0
+			indexMaior = 0
+			print(media)	
    
-			if "+" in hSaida:
-				hSaida = hSaida[:-2]
-			duracao =  driver.find_element(By.XPATH ,f'//*[@id="ContainerFlightInfo{i}"]/span[2]').text
-			h1 = duracao[0:2].strip()
-			h2 = duracao[-7:-5].replace(" ", "0")
+		else:
+			menor = 100000000
+			maior = 0
+			for v in vDiretos:
+				if v[0] < menor:	
+					if menor > maior and menor != 100000000:
+						maior = menor
+      
+					menor = v[0]
+					indexMenor = vDiretos.index(v)
+     
+				elif v[0] > maior:
+					if maior < menor and maior != 0:
+						menor = maior
+					maior = v[0]
+					indexMaior = vDiretos.index(v)
 
-			if len(h1) == 1:
-				h1 = '0' + h1
-
-			duracao = h1 +':' + h2
-	
-			preco =  driver.find_element(By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[2]/div/div/span/span[2]').text
-			preco = preco.replace('.','')
-			preco = preco.replace(',','.')
-			inserirTpPassagem(idPassagem[0],hSaida ,hChegada, duracao ,float(preco))
-			i = menorI
-	
-		print(valor_final)
+			media = (maior + menor)/2
+			print(media)
 		
+		idVoo = obterIdVooGol(destinos)
+		dataVoo = '2022-12-01'
+		companhia = 'GOL'
+		dataPesquisa = datetime.datetime.now().date()
+		inserirPassagem(idVoo,companhia,media,dataVoo,str(dataPesquisa))
+  	
+		idPassagem = obterIdPassagem(idVoo, str(dataPesquisa))
+
+		print('-------------\n' +
+        	  f'{destinos}\n' +
+           	  f'index menor = {indexMenor}\n' +
+           	  f'index maior = {indexMaior}\n' +
+           	  f'media = {media}\n')
+
+		inserirTpPassagem(idPassagem,vDiretos[indexMenor][1], vDiretos[indexMenor][2], vDiretos[indexMenor][3], vDiretos[indexMenor][0])
+		inserirTpPassagem(idPassagem,vDiretos[indexMaior][1], vDiretos[indexMaior][2], vDiretos[indexMaior][3], vDiretos[indexMaior][0])
 
 	driver.close()
  

@@ -6,6 +6,7 @@ CREATE TABLE voo (
   idVoo int NOT NULL AUTO_INCREMENT,
   origem VARCHAR(40) NOT NULL,
   destino VARCHAR(40) NOT NULL,
+  destinoSigla VARCHAR(3) NOT NULL,
   PRIMARY KEY (idVoo)
 );
 
@@ -30,7 +31,6 @@ CREATE TABLE tp_passagem (
   hSaida char(5) NOT NULL,
   hChegada char(5) NOT NULL,
   duracao char(5) NOT NULL,
-  diasPraFrente tinyint,
   preco decimal(9,2) NOT NULL,
   PRIMARY KEY (idTpPassagem),
   KEY passagem_idtppassagem_FK_IX (idPassagem),
