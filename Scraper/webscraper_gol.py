@@ -85,6 +85,8 @@ def main(lista):
 		dataVoo = '2022-12-01'
 		companhia = 'GOL'
 		dataPesquisa = datetime.datetime.now().date()
+		if media > 10000:
+			print('PAROU')
 		inserirPassagem(idVoo,companhia,media,dataVoo,str(dataPesquisa))
   	
 		idPassagem = obterIdPassagem(idVoo, str(dataPesquisa))
@@ -95,8 +97,8 @@ def main(lista):
            	  f'index maior = {indexMaior}\n' +
            	  f'media = {media}\n')
 
-		inserirTpPassagem(idPassagem,vDiretos[indexMenor][1], vDiretos[indexMenor][2], vDiretos[indexMenor][3], vDiretos[indexMenor][0])
-		inserirTpPassagem(idPassagem,vDiretos[indexMaior][1], vDiretos[indexMaior][2], vDiretos[indexMaior][3], vDiretos[indexMaior][0])
+		inserirTpPassagem('MENOR',idPassagem,vDiretos[indexMenor][1], vDiretos[indexMenor][2], vDiretos[indexMenor][3], vDiretos[indexMenor][0])
+		inserirTpPassagem('MAIOR',idPassagem,vDiretos[indexMaior][1], vDiretos[indexMaior][2], vDiretos[indexMaior][3], vDiretos[indexMaior][0])
 
 	driver.close()
  

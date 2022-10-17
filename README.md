@@ -7,7 +7,11 @@ O programa deve ser rodado na classe main.py, lembre-se anteriormente de subir o
 
 Para Fazer:
     - Arrumar webscraping_ltm.py;
-    - Adicionar campo "status" na tabela tipo passagem ("MAIOR", "MENOR"), para auxiliar a filtragem de dados futuramente na dashboard;
+    - Adicionar campo "tipo" na tabela tipo passagem ("MAIOR", "MENOR"), para auxiliar a filtragem de dados futuramente na dashboard;
+    - Apagar as funções inúteis na storage.py;
     - Substituir a branch main pela mysql (precisa estar com os dois scrapings finalizados);
     - Subir a pasta ejs;
     - Idealizar as Dashboards;
+
+Anotações:
+    - Se rodar debugando ele pega todos os dados necessários, se rodar direto depois de um tempo ele devolve dados vazios ou números gigantes (geralmente perto da cidade "FOR").

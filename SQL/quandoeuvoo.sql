@@ -27,6 +27,7 @@ CREATE TABLE passagem (
 -- DROP TABLE IF EXISTS tp_passagem;
 CREATE TABLE tp_passagem (
   idTpPassagem int NOT NULL AUTO_INCREMENT,
+  tipoPassagem varchar(10) NOT NULL,
   idPassagem int NOT NULL,
   hSaida char(5) NOT NULL,
   hChegada char(5) NOT NULL,

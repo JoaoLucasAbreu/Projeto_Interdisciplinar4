@@ -124,9 +124,10 @@ def inserirPassagem(idVoo, companhia, media, dataVoo, dataPesquisa):
 
 		sessao.execute(text("INSERT INTO passagem (idVoo, companhia, media, dataVoo, dataPesquisa) VALUES (:idVoo, :companhia, :media, :dataVoo, :dataPesquisa)"), passagem)
 
-def inserirTpPassagem(idPassagem, hSaida, hChegada, duracao, preco):
+def inserirTpPassagem(tipoPassagem, idPassagem, hSaida, hChegada, duracao, preco):
 	with Session(engine) as sessao, sessao.begin():
 		tpPassagem = {
+			'tipoPassagem': tipoPassagem,
 			'idPassagem': idPassagem,
 			'hSaida': hSaida,
             'hChegada': hChegada,
@@ -134,7 +135,7 @@ def inserirTpPassagem(idPassagem, hSaida, hChegada, duracao, preco):
             'preco': preco
 		}
 
-		sessao.execute(text("INSERT INTO tp_passagem (idPassagem, hSaida, hChegada, duracao, preco) VALUES (:idPassagem, :hSaida, :hChegada, :duracao, :preco)"), tpPassagem)
+		sessao.execute(text("INSERT INTO tp_passagem (tipoPassagem, idPassagem, hSaida, hChegada, duracao, preco) VALUES (:tipoPassagem, :idPassagem, :hSaida, :hChegada, :duracao, :preco)"), tpPassagem)
 
 
 # O uso desse tipo de instrução é muito comum em Python!
