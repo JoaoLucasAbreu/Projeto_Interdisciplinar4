@@ -22,7 +22,7 @@ def main(lista):
 	for destinos in lista:
 		driver.get(f'https://www.latamairlines.com/br/pt/oferta-voos?origin=GRU&inbound=null&outbound=2022-12-01T15%3A00%3A00.000Z&destination={destinos}&adt=1&chd=0&inf=0&trip=OW&cabin=Economy&redemption=false&sort=RECOMMENDED')
 		driver.maximize_window()
-		time.sleep(7)
+		time.sleep(10)
   
 		# Verifica se há Cookie e aceita ele
 		if cookie == False:
@@ -69,8 +69,8 @@ def main(lista):
 			print(media)	
    
 		else:
-			menor = 100000000
 			maior = 0
+			menor = 999999999
 			for v in vDiretos:
 				if v[0] < menor:	
 					if menor > maior and menor != 100000000:

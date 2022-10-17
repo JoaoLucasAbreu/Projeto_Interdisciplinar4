@@ -22,6 +22,7 @@ def main(lista):
 	for destinos in lista:
 		driver.get(f'https://www.latamairlines.com/br/pt/oferta-voos?origin=GRU&inbound=null&outbound=2022-12-01T15%3A00%3A00.000Z&destination={destinos}&adt=1&chd=0&inf=0&trip=OW&cabin=Economy&redemption=false&sort=RECOMMENDED')
 		driver.maximize_window()
+		time.sleep(10)
 		# Verifica se há Cookie e aceita ele
 		if cookie == False:
 			cookiebtn = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "cookies-politics-button")))
@@ -85,26 +86,27 @@ def main(lista):
 
 		i = maiorI 
 		time.sleep(10)
+
 		for j in range(2):																		 
 			hSaida = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[1]/div[1]/span[1]')))
 			hSaida = hSaida.text
-			if hSaida == '' or hSaida == ':': 
-				print("ERRO")
+			#if hSaida == '' or hSaida == ':': 
+			#	print("ERRO")
     
 			hChegada = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[1]/div[3]/span[1]')))
 			hChegada = hChegada.text
    
-			if "+" in hChegada:
-				hChegada = hChegada[:-2]
+			#if "+" in hChegada:
+			#	hChegada = hChegada[:-2]
 			duracao = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH ,f'//*[@id="ContainerFlightInfo{i}"]/span[2]')))
 			duracao = duracao.text
-			h1 = duracao[0:2].strip()
-			h2 = duracao[-7:-5].replace(" ", "0")
+			#h1 = duracao[0:2].strip()
+			#h2 = duracao[-7:-5].replace(" ", "0")
 
-			if len(h1) == 1:
-				h1 = '0' + h1
+			#if len(h1) == 1:
+			#	h1 = '0' + h1
 
-			duracao = h1 +':' + h2
+			#duracao = h1 +':' + h2
 	
 			preco = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH ,f'//*[@id="WrapperCardFlight{i}"]/div/div[1]/div[2]/div[2]/div/div/span/span[2]')))
 			preco = preco.text
