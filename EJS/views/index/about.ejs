@@ -1,0 +1,252 @@
+﻿<h1 class="h1-text">
+    <i class="fa fa-users" aria-hidden="true"></i>Integrantes
+</h1>
+<div class="container" style="margin: 0;">
+    <div class="box">
+        <div class="top-bar"></div>
+        <div class="top">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            <input type="checkbox" class="heart-btn" id="heart-btn-1">
+            <label class="heart" for="heart-btn-1"></label>
+        </div>
+        <div class="content">
+            <img src="https://images.pexels.com/photos/2570145/pexels-photo-2570145.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+                alt="">
+            <strong>João Lucas Abreu</strong>
+            <p>thewarner@gmail.com</p>
+        </div>
+        <div class="btn">
+            <a href="#"><i class="fa fa-clipboard" aria-hidden="true"></i>Assign</a>
+            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>View</a>
+        </div>
+    </div>
+    <div class="box">
+        <div class="top-bar"></div>
+        <div class="top">
+            <div>
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </div>
+            <div>
+                <input type="checkbox" class="heart-btn" id="heart-btn-2">
+                <label class="heart" for="heart-btn-2"></label>
+            </div>
+        </div>
+        <div class="content">
+            <img src=https://images.pexels.com/photos/2826131/pexels-photo-2826131.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260
+                alt="">
+            <strong>Rohan Tolani</strong>
+            <p>rooohan@gmail.com</p>
+        </div>
+        <div class="btn">
+            <a href="#"><i class="fa fa-clipboard" aria-hidden="true"></i>Assign</a>
+            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>View</a>
+        </div>
+    </div>
+    <div class="box">
+        <div class="top-bar"></div>
+        <div class="top">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            <input type="checkbox" class="heart-btn" id="heart-btn-3">
+            <label class="heart" for="heart-btn-3"></label>
+        </div>
+        <div class="content">
+            <img src=https://images.pexels.com/photos/3681591/pexels-photo-3681591.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940
+                alt="">
+            <strong>Raquel John</strong>
+            <p>Raquel John</p>
+        </div>
+        <div class="btn">
+            <a href="#"><i class="fa fa-clipboard" aria-hidden="true"></i>Assign</a>
+            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>View</a>
+        </div>
+    </div>
+    <div class="box">
+        <div class="top-bar"></div>
+        <div class="top">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            <input type="checkbox" class="heart-btn" id="heart-btn-4">
+            <label class="heart" for="heart-btn-4"></label>
+        </div>
+        <div class="content">
+            <img src=https://images.pexels.com/photos/1689731/pexels-photo-1689731.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940
+                alt="">
+            <strong>Priya Mehra</strong>
+            <p>priyamehraa@gmail.com</p>
+        </div>
+        <div class="btn">
+            <a href="#"><i class="fa fa-clipboard" aria-hidden="true"></i>Assign</a>
+            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i>View</a>
+        </div>
+    </div>
+</div>
+
+<%- contentFor("pos-styles") %>
+<style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+    *{
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+    
+    body{
+        width: 100%;
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    a{
+        text-decoration: none;
+    }
+    
+    
+    .h1-text{
+        font-size: 1.3rem;
+        color: #e0e0e0;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .h1-text i{
+        background-color: #509bfc;
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        box-shadow: 2px 5px 30px rgba(80, 123, 252, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        margin: 0 20px;
+    }
+    
+     .container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    } 
+    
+    
+    .box{
+        position: relative;
+        min-width: 250px;
+        background-color: #fff;
+        box-shadow: 2px 3px 30px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        margin: 20px;
+        position: relative;
+        border-radius: 10px;
+    }
+    
+    
+    .top-bar{
+        width: 50%;
+        height: 4px;
+        background: #507bfc;
+        position: absolute;
+        top: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 0px 0px 10px 10px;
+    }
+    
+    .top{
+        display: flex;
+        justify-content: space-between;
+        align-items:center ;
+        width: 100%;
+    }
+    
+    .fa-check-circle{
+        color: #17b667;
+    }
+    
+    /* creating heart */
+     .heart{
+        color: rgba(155,155,155);
+    }
+    .heart::before{
+        content: '\f004';
+        font-family: fontawesome;
+        line-height: 30px;
+        cursor: pointer;
+        z-index: 1;
+        transition: all 0.3s;
+    }
+    .box .heart-btn:checked ~ .heart::before{
+        color:#e41934
+    }
+    .heart-btn{
+        position: absolute;
+        top: 25px;
+        right: 20px;
+        padding: 1rem;
+        display: none;
+    }
+    
+    
+    .content img{
+        width: 90px;
+        height: 90px;
+        border-radius:100px;
+        overflow: hidden;
+        object-fit: cover;
+        object-position: top;
+    }
+    .content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .content strong{
+        font-weight: 500;
+        color: #141414;
+        margin-top: 10px;
+    }
+    .content p{
+        font-size: 0.9rem;
+        color: #7a7a7a;
+        margin: 4px 0px 10px 0px;
+        cursor: pointer;
+    }
+    .content p:hover{
+        text-decoration: underline;
+    }
+    
+    .btn{
+        margin-top: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .btn a i{
+        margin-right: 9px;
+    }
+    .btn a{
+        border-radius: 20px;
+        color: #8b8b8b;
+        padding: 8px 20px;
+        font-size: 0.9rem;
+    }
+    .btn a:hover{
+        color: #fff;
+        box-shadow: 2px 5px 15px rgba(80,123,252,0.05);
+        background-color: #507bfc;
+        transition: all ease 0.5s;
+    }
+
+</style>
