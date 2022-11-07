@@ -3,6 +3,13 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
+
+#from PY_SCRAPER import *
+#from sqlalchemy import create_engine, text
+#from sqlalchemy.orm import Session
+#engine = create_engine('mysql+mysqlconnector://root:root@localhost/quando_eu_voo')
+
+
 from flask_login import UserMixin
 
 from sqlalchemy.orm import relationship
@@ -11,6 +18,12 @@ from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 from apps import db, login_manager
 
 from apps.authentication.util import hash_pass
+
+
+#def obterIdVoo():
+#	with Session(engine) as sessao:
+#		destinos = sessao.execute(text("SELECT destino FROM voo")).all()
+#		return destinos
 
 class Users(db.Model, UserMixin):
 
@@ -22,6 +35,7 @@ class Users(db.Model, UserMixin):
     password      = db.Column(db.LargeBinary)
 
     oauth_github  = db.Column(db.String(100), nullable=True)
+
 
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
