@@ -1,4 +1,5 @@
 ﻿import app = require("teem");
+import dados = require("../models/dados");
 
 class IndexRoute {
 	public async index(req: app.Request, res: app.Response) {
@@ -22,7 +23,10 @@ class IndexRoute {
 	}
 
 	public async upload(req: app.Request, res: app.Response) {
-		res.render("index/upload");
+		res.render("index/upload",{
+			titulo: "Dashboard",
+			dados: await dados.listar_destinos()
+		});
 	}
 
 	public async about(req: app.Request, res: app.Response) {

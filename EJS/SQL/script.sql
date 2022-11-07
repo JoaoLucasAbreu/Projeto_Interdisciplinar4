@@ -1,26 +1,40 @@
--- Esse script vale para o MySQL 8.x. Se seu MySQL for 5.x, precisa executar essa linha comentada:
--- CREATE DATABASE IF NOT EXISTS gallery;
-CREATE DATABASE IF NOT EXISTS gallery DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE IF NOT EXISTS quando_eu_voo DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_0900_ai_ci;
+USE quando_eu_voo;
 
-USE gallery;
-
-CREATE TABLE usuario (
-  id_usuario int NOT NULL AUTO_INCREMENT,
-  nome varchar(50) NOT NULL,
-  sobrenome varchar(50) NOT NULL,
-  apelido varchar(50) NOT NULL,
-  email varchar(50) NOT NULL,
-  senha varchar(50) NOT NULL,
-  PRIMARY KEY (id_usuario),
-  UNIQUE KEY apelido_UN (apelido),
-  UNIQUE KEY email_UN (email)
+-- DROP TABLE IF EXISTS voo;
+CREATE TABLE voo (
+  idVoo int NOT NULL AUTO_INCREMENT,
+  origem VARCHAR(40) NOT NULL,
+  destino VARCHAR(40) NOT NULL,
+  destinoSigla VARCHAR(3) NOT NULL,
+  PRIMARY KEY (idVoo)
 );
 
-CREATE TABLE arte (
-  id_arte int NOT NULL AUTO_INCREMENT,
-  titulo_arte varchar(50) NOT NULL,
-  autor varchar(50) NOT NULL,
-  tema varchar(50) NOT NULL,
-  sobre varchar(50),
-  PRIMARY KEY (id_arte)
+-- DROP TABLE IF EXISTS passagem;
+CREATE TABLE passagem (
+  idPassagem int NOT NULL AUTO_INCREMENT,
+  idVoo int NOT NULL,
+  companhia varchar(10) NOT NULL,
+  media decimal(9,2) NOT NULL,
+  dataVoo date NOT NULL,
+  dataPesquisa date NOT NULL,
+  PRIMARY KEY (idPassagem),
+  KEY passagem_idvoo_FK_IX (idVoo),
+  CONSTRAINT passagem_idvoo_FK FOREIGN KEY (idVoo) REFERENCES voo (idVoo) ON DELETE CASCADE ON UPDATE RESTRICT
 );
+
+
+-- DROP TABLE IF EXISTS tp_passagem;
+CREATE TABLE tp_passagem (
+  idTpPassagem int NOT NULL AUTO_INCREMENT,
+  tipoPassagem varchar(10) NOT NULL,
+  idPassagem int NOT NULL,
+  hSaida char(5) NOT NULL,
+  hChegada char(5) NOT NULL,
+  duracao char(5) NOT NULL,
+  preco decimal(9,2) NOT NULL,
+  PRIMARY KEY (idTpPassagem),
+  KEY passagem_idtppassagem_FK_IX (idPassagem),
+  CONSTRAINT passagem_idtppassagem_FK FOREIGN KEY (idPassagem) REFERENCES passagem (idPassagem) ON DELETE CASCADE ON UPDATE RESTRICT
+);
+
