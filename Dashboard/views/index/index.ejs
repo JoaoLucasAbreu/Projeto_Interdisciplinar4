@@ -91,9 +91,8 @@
 				Swal.error("Ocorreu um erro ao atualizar o gráfico");
 				return;
 			}
-			
 			const dados = await response.json();
-			console.log(dados.labels);
+			//dados.labels = Date.parse(dados.labels);
 
 			atualizando = false;
 			Swal.close();

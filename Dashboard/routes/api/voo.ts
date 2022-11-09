@@ -11,16 +11,15 @@ class VooApiRoute {
 		let valores = null
 
 		await sql.connect(async (sql) => {
-			labels = await sql.query('select distinct DATE_FORMAT(dataPesquisa,"%e/%m") AS dataPesquisa from passagem  where companhia = ? and idVoo = ? ' ,[companhia,iddestino]) as [] ;
+			labels = await sql.query("select distinct dataPesquisa from passagem where companhia = ? and idVoo = ? " ,[companhia,iddestino]) as [] ;
 			valores = await sql.query("select media from passagem where companhia = ? and idVoo = ? ", [companhia,iddestino]) as [] ; 
 		});
 
 		let dados = {
 			labels: labels.map( x => x.dataPesquisa),
 			valores: valores.map( x => x.media),
-			
 		};
-		
+
 		res.json(dados);
 	}
 }
