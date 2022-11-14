@@ -17,9 +17,17 @@ Anotações:
     - Se rodar debugando ele pega todos os dados necessários, se rodar direto depois de um tempo ele devolve dados vazios ou números gigantes (geralmente perto da cidade "FOR").
 
 
-sql:
-SELECT voo.destino, tp_passagem.preco, tp_passagem.tipoPassagem, tp_passagem.hSaida, tp_passagem.duracao, passagem.companhia, passagem.dataPesquisa
-FROM passagem
-INNER JOIN voo ON passagem.idVoo = voo.idVoo
-INNER JOIN tp_passagem ON passagem.idPassagem = tp_passagem.idPassagem
-WHERE tp_passagem.tipoPassagem = "MENOR" and  passagem.dataPesquisa = "2022-10-19"
+SQL:
+    SELECT voo.destino, tp_passagem.preco, tp_passagem.tipoPassagem, tp_passagem.hSaida, tp_passagem.duracao, passagem.companhia, passagem.dataPesquisa
+    FROM passagem
+    INNER JOIN voo ON passagem.idVoo = voo.idVoo
+    INNER JOIN tp_passagem ON passagem.idPassagem = tp_passagem.idPassagem
+    WHERE tp_passagem.tipoPassagem = "MENOR" and  passagem.dataPesquisa = "2022-10-19";
+
+    SELECT voo.destino, tp_passagem.preco, tp_passagem.tipoPassagem
+    FROM passagem
+    INNER JOIN voo ON passagem.idVoo = voo.idVoo
+    INNER JOIN tp_passagem ON passagem.idPassagem = tp_passagem.idPassagem
+    WHERE tp_passagem.tipoPassagem = "MAIOR" and  passagem.dataPesquisa = "2022-10-19"
+    ORDER BY tp_passagem.preco DESC
+    LIMIT 5;

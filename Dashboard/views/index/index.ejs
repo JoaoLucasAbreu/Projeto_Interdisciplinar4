@@ -19,6 +19,9 @@
 			</div>
 		</div>
 	</div> -->
+	<div class="card-header">
+		<h4 class="card-title">Menores Preços</h4>
+	</div>
 	<div class="card-body" style="padding-bottom: 0;">
 		<div class="row">
 <!-- 		<div class="col-md-2 offset-md-6 mb-3 mb-md-0">
@@ -42,64 +45,80 @@
 	</div>
 </div>
 
-<div class="card shadow col-sm-6 mb-4">
-	<!--tabela -->
-	<div class="card-header">
-		<h4 class="card-title">Menores Preços</h4>
+<div class="row">
+	<div class="col-sm-4">
+		<div class="card shadow mb-4">
+			<!--tabela -->
+			<div class="card-header">
+				<h4 class="card-title">Top 5 destinos mais caros</h4>
+			</div>
+			<div class="card-body">
+				<div class="chart-area" id="chartPieContainer"></div>
+			</div>
+		</div>
 	</div>
-	<div class="card-body">
-		<div class="table-responsive">
-			<table class="table tablesorter " id="">
-				<thead class=" text-primary">
-				<tr>
-					<th>
-						Destino
-					</th>
-					<th>
-						Companhia
-					</th>
-					<th>
-					   Horário de Saída
-					</th>
-					<th>
-					   Duração
-					</th>
-					<th>
-					   Data de Pesquisa
-					</th>
-					<th class="text-center">
-						Preco
-					</th>
-				</tr>
-				</thead>
-				<tbody>
-				<% for (let i = 0; i < passagens.length; i++) { %>
-					<tr>
-						<td>
-							<%= passagens[i].destino %>
-						</td>
-						<td>
-							<%= passagens[i].companhia %>
-						</td>
-						<td>
-							<%= passagens[i].hSaida %>
-						</td>
-						<td>
-							<%= passagens[i].duracao %>
-						</td>
-						<td>
-							<%= passagens[i].dataPesquisa %>
-						</td>
-						<td class="text-center">
-							<%= passagens[i].preco %>
-						</td>
-					</tr>
-				<% } %>
-				</tbody>
-			</table>
+	<div class="col-sm-8">
+		<div class="card shadow mb-4" style="height: 500px;">
+			<!--tabela -->
+			<div class="card-header">
+				<h4 class="card-title">Menores Preços</h4>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive" style="max-height: 500px;">
+					<table class="table tablesorter " id="">
+						<thead class=" text-primary">
+						<tr>
+							<th>
+								Destino
+							</th>
+							<th>
+								Companhia
+							</th>
+							<th>
+							Horário de Saída
+							</th>
+							<th>
+							Duração
+							</th>
+							<th>
+							Data de Pesquisa
+							</th>
+							<th class="text-center">
+								Preço
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+						<% for (let i = 0; i < passagens.length; i++) { %>
+							<tr>
+								<td>
+									<%= passagens[i].destino %>
+								</td>
+								<td>
+									<%= passagens[i].companhia %>
+								</td>
+								<td>
+									<%= passagens[i].hSaida %>
+								</td>
+								<td>
+									<%= passagens[i].duracao %>
+								</td>
+								<td>
+									<%= passagens[i].dataPesquisa %>
+								</td>
+								<td class="text-center">
+									<%= passagens[i].preco %>
+								</td>
+							</tr>
+						<% } %>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
+
 
 <%- contentFor("scripts") %>
 
@@ -137,6 +156,7 @@
 			return;
 
 		$("#chartContainer").html('<canvas id="myAreaChart"></canvas>');
+		$("#chartPieContainer").html('<canvas id="myPieChart"></canvas>');
 
 		Swal.wait();
 
@@ -240,6 +260,54 @@
 						}
 					}
 				}
+			});
+
+		} catch (ex) {
+			atualizando = false;
+			Swal.error("Erro de rede ao atualizar o gráfico: " + ex.message);
+		}
+
+		Swal.wait();
+
+		try {
+			const response = await fetch("/api/voo/top5")
+
+			if (!response.ok) {
+				atualizando = false;
+				Swal.error("Ocorreu um erro ao atualizar o gráfico");
+				return;
+			}
+			
+			const dados2 = await response.json();
+			//console.log(dados.labels);
+
+			atualizando = false;
+			Swal.close();
+
+			var ctx = document.getElementById("myPieChart");
+			var myPieChart = new Chart(ctx, {
+				type: 'doughnut',
+  				data: {labels: dados2.siglas,
+				  datasets: [{
+					//label: 'My First Dataset',
+					data: dados2.preco,
+					backgroundColor: [
+					'rgba(255, 159, 64, 0.5)',
+					'rgba(255, 205, 86, 0.5)',
+					'rgba(75, 192, 192, 0.5)',
+					'rgba(54, 162, 235, 0.5)',
+					'rgba(153, 102, 255, 0.5)'
+					],
+					borderColor: [
+					'rgb(255, 159, 64)',
+					'rgb(255, 205, 86)',
+					'rgb(75, 192, 192)',
+					'rgb(54, 162, 235)',
+					'rgb(153, 102, 255)'
+					],
+					hoverOffset: 4
+				  }]},
+				
 			});
 
 		} catch (ex) {

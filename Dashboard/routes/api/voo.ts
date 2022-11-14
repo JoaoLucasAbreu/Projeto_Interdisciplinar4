@@ -63,6 +63,23 @@ class VooApiRoute {
 		
 		res.json(dados);
 	}
+
+	public static async top5(req: app.Request, res: app.Response) {
+		let valores = null
+
+		await sql.connect(async (sql) => {
+			valores = await sql.query('SELECT voo.destino, voo.destinoSigla, tp_passagem.preco FROM passagem INNER JOIN voo ON passagem.idVoo = voo.idVoo INNER JOIN tp_passagem ON passagem.idPassagem = tp_passagem.idPassagem WHERE tp_passagem.tipoPassagem = "MAIOR" and  passagem.dataPesquisa = "2022-10-19" ORDER BY tp_passagem.preco DESC LIMIT 5');
+		});
+
+		let dados = {
+			preco: valores.map( x => x.preco),
+			siglas: valores.map( x => x.destinoSigla),
+			destinos: valores.map( x => x.destibo),
+			
+		};
+		
+		res.json(dados);
+	}
 }
 
 export = VooApiRoute;
