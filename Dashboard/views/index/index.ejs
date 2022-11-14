@@ -1,27 +1,7 @@
-﻿<div class="card shadow mb-4">
-	<!-- Card Body -->
-	<div class="card-body">
-		<div class="row">
-			<div class="col-md-6 mb-3 mb-md-0">
-				<select class="form-control" id="selectCompanhia" onchange="atualizarGrafico()">
-					<option value="GOL">GOL</option>
-					<option value="LATAM">LATAM</option>
-				</select>
-			</div>
-			<div class="col-md-6 mb-0">
-				<select class="form-control" id="selectDestino" onchange="atualizarGrafico()">
-					<% for (let i = 0; i < destinos.length; i++) { %>
-						<option value="<%= destinos[i].idVoo %>"><%= destinos[i].destino %></option>
-					<% } %>
-				</select>
-			</div>
-		</div>
-	</div>
-</div>
-
+﻿
 <div class="card shadow mb-4">
 	<!-- Card Header - Dropdown -->
-	<div
+<!-- 	<div
 		class="card-header d-flex flex-row align-items-center justify-content-between">
 		Earnings Overview
 		<div class="dropdown no-arrow">
@@ -38,12 +18,107 @@
 				<a class="dropdown-item" href="#">Something else here</a>
 			</div>
 		</div>
+	</div> -->
+	<div class="card-header">
+		<h4 class="card-title">Menores Preços</h4>
+	</div>
+	<div class="card-body" style="padding-bottom: 0;">
+		<div class="row">
+<!-- 		<div class="col-md-2 offset-md-6 mb-3 mb-md-0">
+				<select class="form-control" id="selectCompanhia" onchange="atualizarGrafico()">
+					<option value="GOL">GOL</option>
+					<option value="LATAM">LATAM</option>
+				</select>
+			</div> -->
+			<div class="col-md-4 mb-0 offset-md-8">
+				<select class="form-control" id="selectDestino" onchange="atualizarGrafico()">
+					<% for (let i = 0; i < destinos.length; i++) { %>
+						<option value="<%= destinos[i].idVoo %>"><%= destinos[i].destino %></option>
+					<% } %>
+				</select>
+			</div>
+		</div>
 	</div>
 	<!-- Card Body -->
-	<div class="card-body">
+	<div class="card-body" style="padding-top: 0;">
 		<div class="chart-area" id="chartContainer"></div>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-sm-4">
+		<div class="card shadow mb-4">
+			<!--tabela -->
+			<div class="card-header">
+				<h4 class="card-title">Top 5 destinos mais caros</h4>
+			</div>
+			<div class="card-body">
+				<div class="chart-area" id="chartPieContainer"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-8">
+		<div class="card shadow mb-4" style="height: 500px;">
+			<!--tabela -->
+			<div class="card-header">
+				<h4 class="card-title">Menores Preços</h4>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive" style="max-height: 500px;">
+					<table class="table tablesorter " id="">
+						<thead class=" text-primary">
+						<tr>
+							<th>
+								Destino
+							</th>
+							<th>
+								Companhia
+							</th>
+							<th>
+							Horário de Saída
+							</th>
+							<th>
+							Duração
+							</th>
+							<th>
+							Data de Pesquisa
+							</th>
+							<th class="text-center">
+								Preço
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+						<% for (let i = 0; i < passagens.length; i++) { %>
+							<tr>
+								<td>
+									<%= passagens[i].destino %>
+								</td>
+								<td>
+									<%= passagens[i].companhia %>
+								</td>
+								<td>
+									<%= passagens[i].hSaida %>
+								</td>
+								<td>
+									<%= passagens[i].duracao %>
+								</td>
+								<td>
+									<%= passagens[i].dataPesquisa %>
+								</td>
+								<td class="text-center">
+									<%= passagens[i].preco %>
+								</td>
+							</tr>
+						<% } %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <%- contentFor("scripts") %>
 
@@ -81,11 +156,12 @@
 			return;
 
 		$("#chartContainer").html('<canvas id="myAreaChart"></canvas>');
+		$("#chartPieContainer").html('<canvas id="myPieChart"></canvas>');
 
 		Swal.wait();
 
 		try {
-			const response = await fetch("/api/voo/listar?c=" + encodeURIComponent($("#selectCompanhia").val()) + "&d=" + encodeURIComponent($("#selectDestino").val()))
+			const response = await fetch("/api/voo/listar?d=" + encodeURIComponent($("#selectDestino").val()))
 			if (!response.ok) {
 				atualizando = false;
 				Swal.error("Ocorreu um erro ao atualizar o gráfico");
@@ -93,7 +169,7 @@
 			}
 			
 			const dados = await response.json();
-			console.log(dados.labels);
+			//console.log(dados.labels);
 
 			atualizando = false;
 			Swal.close();
@@ -102,22 +178,20 @@
 			var myLineChart = new Chart(ctx, {
 				type: 'line',
 				data: {
-					labels: dados.labels,
+					labels: dados.labelsGol,
 					datasets: [{
-						label: "Earnings",
-						lineTension: 0.3,
-						backgroundColor: "rgba(78, 115, 223, 0.05)",
-						borderColor: "rgba(78, 115, 223, 1)",
-						pointRadius: 3,
-						pointBackgroundColor: "rgba(78, 115, 223, 1)",
-						pointBorderColor: "rgba(78, 115, 223, 1)",
-						pointHoverRadius: 3,
-						pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-						pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-						pointHitRadius: 10,
-						pointBorderWidth: 2,
-						data: dados.valores,
-					}],
+						label: 'GOL',
+						yAxisID: 'GOL',
+						borderColor: 'rgb(255, 159, 64)',
+      					backgroundColor: 'rgba(255, 159, 64, 0.2)',
+						data: dados.valoresGol
+					  }, {
+						label: 'LATAM',
+						yAxisID: 'LATAM',
+						borderColor: 'rgb(53, 162, 235)',
+      					backgroundColor: 'rgba(53, 162, 235, 0.5)',
+						data: dados.valoresLatam
+					  }]
 				},
 				options: {
 					maintainAspectRatio: false,
@@ -143,6 +217,7 @@
 							}
 						},
 						y: {
+							display: false, // MUDEI
 							ticks: {
 								maxTicksLimit: 5,
 								padding: 10,
@@ -185,6 +260,54 @@
 						}
 					}
 				}
+			});
+
+		} catch (ex) {
+			atualizando = false;
+			Swal.error("Erro de rede ao atualizar o gráfico: " + ex.message);
+		}
+
+		Swal.wait();
+
+		try {
+			const response = await fetch("/api/voo/top5")
+
+			if (!response.ok) {
+				atualizando = false;
+				Swal.error("Ocorreu um erro ao atualizar o gráfico");
+				return;
+			}
+			
+			const dados2 = await response.json();
+			//console.log(dados.labels);
+
+			atualizando = false;
+			Swal.close();
+
+			var ctx = document.getElementById("myPieChart");
+			var myPieChart = new Chart(ctx, {
+				type: 'doughnut',
+  				data: {labels: dados2.siglas,
+				  datasets: [{
+					//label: 'My First Dataset',
+					data: dados2.preco,
+					backgroundColor: [
+					'rgba(255, 159, 64, 0.5)',
+					'rgba(255, 205, 86, 0.5)',
+					'rgba(75, 192, 192, 0.5)',
+					'rgba(54, 162, 235, 0.5)',
+					'rgba(153, 102, 255, 0.5)'
+					],
+					borderColor: [
+					'rgb(255, 159, 64)',
+					'rgb(255, 205, 86)',
+					'rgb(75, 192, 192)',
+					'rgb(54, 162, 235)',
+					'rgb(153, 102, 255)'
+					],
+					hoverOffset: 4
+				  }]},
+				
 			});
 
 		} catch (ex) {

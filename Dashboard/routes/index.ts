@@ -11,12 +11,23 @@ class IndexRoute {
 			await app.sql.connect(async (sql) => {
 				destinos = await sql.query("SELECT idVoo, destino FROM voo ORDER BY destino ASC");
 			});
+
+			let passagens: any[];
+			await app.sql.connect(async (sql) => {
+				passagens = await sql.query("SELECT voo.destino, tp_passagem.preco, tp_passagem.tipoPassagem, tp_passagem.hSaida, tp_passagem.duracao, passagem.companhia, passagem.dataPesquisa FROM passagem INNER JOIN voo ON passagem.idVoo = voo.idVoo INNER JOIN tp_passagem ON passagem.idPassagem = tp_passagem.idPassagem WHERE tp_passagem.tipoPassagem = ? and passagem.dataPesquisa = ?", ["MENOR","2022-10-19"]) as [] ; 
+			});
+
+
+
 			res.render("index/index", {
 				layout: "layout-sem-form",
 				titulo: "Dashboard",
 				usuario: u,
-				destinos: destinos
+				destinos: destinos,
+				passagens: passagens
 			});
+
+
 		}
 	}
 
