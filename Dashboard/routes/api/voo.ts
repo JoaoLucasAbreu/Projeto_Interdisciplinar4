@@ -1,11 +1,11 @@
 ﻿import { sql } from "teem";
 import app = require("teem");
 
-/* class VooApiRoute {
+/*class VooApiRoute {
 	public static async listar(req: app.Request, res: app.Response) {
 
 		const iddestino = parseInt(req.query["d"] as string) || 0;
-		//const companhia = req.query["c"] || "";
+		const companhia = req.query["c"] || "";
 		
 		let labelsGol = null
 		let labelsLatam = null
@@ -33,7 +33,7 @@ import app = require("teem");
 	}
 }
 
-export = VooApiRoute; */
+export = VooApiRoute;*/
 
 class VooApiRoute {
 	public static async listar(req: app.Request, res: app.Response) {
@@ -58,7 +58,6 @@ class VooApiRoute {
 			labelsLatam: labelsLatam.map( x => x.dataPesquisa),
 			valoresGol: valoresGol.map( x => x.media),
 			valoresLatam: valoresLatam.map( x => x.media),
-			
 		};
 		
 		res.json(dados);
@@ -66,9 +65,12 @@ class VooApiRoute {
 
 	public static async top5(req: app.Request, res: app.Response) {
 		let valores = null
+		//let labels = null
+		const iddestino = parseInt(req.query["d"] as string) || 0;
+		const companhia = req.query["c"] || "";
 
 		await sql.connect(async (sql) => {
-			labels = await sql.query('select distinct DATE_FORMAT(dataPesquisa,"%e/%m") AS dataPesquisa from passagem  where companhia = ? and idVoo = ? ' ,[companhia,iddestino]) as [] ;
+			//labels = await sql.query('select distinct DATE_FORMAT(dataPesquisa,"%e/%m") AS dataPesquisa from passagem  where companhia = ? and idVoo = ? ' ,[companhia,iddestino]) as [] ;
 			valores = await sql.query("select media from passagem where companhia = ? and idVoo = ? ", [companhia,iddestino]) as [] ; 
 		});
 
