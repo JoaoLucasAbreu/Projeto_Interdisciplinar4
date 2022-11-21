@@ -37,6 +37,7 @@ CREATE TABLE voo (
   origem VARCHAR(40) NOT NULL,
   destino VARCHAR(40) NOT NULL,
   destinoSigla VARCHAR(3) NOT NULL,
+  regiao VARCHAR(2) NOT NULL,
   PRIMARY KEY (idVoo)
 );
 
@@ -68,3 +69,27 @@ CREATE TABLE tp_passagem (
   CONSTRAINT passagem_idtppassagem_FK FOREIGN KEY (idPassagem) REFERENCES passagem (idPassagem) ON DELETE CASCADE ON UPDATE RESTRICT
 );
 
+INSERT INTO `voo` VALUES 
+(1,'São Paulo, GRU - Brasil','Rio Branco, RBR - Brasil','RBR', 'N'),
+(2,'São Paulo, GRU - Brasil','Maceió, MCZ - Brasil','MCZ', 'NE'),
+(3,'São Paulo, GRU - Brasil','Manaus, MAO - Brasil','MAO', 'N'),
+(4,'São Paulo, GRU - Brasil','Salvador da Bahia, SSA - Brasil','SSA', 'NE'),
+(5,'São Paulo, GRU - Brasil','Fortaleza, FOR - Brasil','FOR', 'NE'),
+(6,'São Paulo, GRU - Brasil','Brasília, BSB - Brasil','BSB', 'CO'),
+(7,'São Paulo, GRU - Brasil','Vitória, VIX - Brasil','VIX', 'SE'),
+(8,'São Paulo, GRU - Brasil','Goiânia, GYN - Brasil','GYN', 'CO'),
+(9,'São Paulo, GRU - Brasil','São Luís, SLZ - Brasil','SLZ', 'NE'),
+(10,'São Paulo, GRU - Brasil','Cuiabá, CGB - Brasil','CGB', 'CO'),
+(11,'São Paulo, GRU - Brasil','Campo Grande, CGR - Brasil','CGR', 'CO'),
+(12,'São Paulo, GRU - Brasil','Belo Horizonte, CNF - Brasil','CNF', 'SE'),
+(13,'São Paulo, GRU - Brasil','Belém, BEL - Brasil','BEL', 'N'),
+(14,'São Paulo, GRU - Brasil','João Pessoa, JPA - Brasil','JPA', 'NE'),
+(15,'São Paulo, GRU - Brasil','Curitiba, CWB - Brasil','CWB', 'S'),
+(16,'São Paulo, GRU - Brasil','Recife, REC - Brasil','REC', 'NE'),
+(17,'São Paulo, GRU - Brasil','Teresina, THE - Brasil','THE', 'NE'),
+(18,'São Paulo, GRU - Brasil','Rio de Janeiro, SDU - Brasil','SDU', 'SE'),
+(19,'São Paulo, GRU - Brasil','Natal, NAT - Brasil','NAT', 'NE'),
+(20,'São Paulo, GRU - Brasil','Porto Alegre, POA - Brasil','POA', 'S'),
+(21,'São Paulo, GRU - Brasil','Florianópolis, FLN - Brasil','FLN', 'S'),
+(22,'São Paulo, GRU - Brasil','Aracaju, AJU - Brasil','AJU', 'NE'),
+(23,'São Paulo, GRU - Brasil','Palmas, PMW - Brasil','PMW', 'N');
