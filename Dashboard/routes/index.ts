@@ -7,9 +7,11 @@ class IndexRoute {
 		if (!u) {
 			res.redirect(app.root + "/login");
 		} else {
+			let maiores: any[];
 			let destinos: any[];
 			await app.sql.connect(async (sql) => {
 				destinos = await sql.query("SELECT idVoo, destino FROM voo ORDER BY destino ASC");
+				maiores = await sql.query('SELECT distinct passagem.media, voo.destino, voo.destinoSigla FROM passagem INNER JOIN voo ON passagem.idVoo = voo.idVoo group by voo.destino ORDER BY passagem.media DESC');
 			});
 
 			let passagens: any[];
@@ -18,16 +20,14 @@ class IndexRoute {
 			});
 
 
-
 			res.render("index/index", {
 				layout: "layout-sem-form",
 				titulo: "Dashboard",
 				usuario: u,
 				destinos: destinos,
-				passagens: passagens
+				passagens: passagens,
+				maiores: maiores
 			});
-
-
 		}
 	}
 

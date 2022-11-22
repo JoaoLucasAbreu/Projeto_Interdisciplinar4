@@ -72,17 +72,18 @@ def obterIdVooGol(destinoSigla):
 		else:
 			return idVoo[0]
 
-def obterIdPassagem(idVoo, dataPesquisa):
+def obterIdPassagem(idVoo, dataPesquisa,companhia):
 	with Session(engine) as sessao:
 		parametros = {
 			'idVoo': idVoo,
-			'dataPesquisa': dataPesquisa
+			'dataPesquisa': dataPesquisa,
+			'companhia': companhia
 		}
 
 		# Mais informações sobre o método execute e sobre o resultado que ele retorna:
 		# https://docs.sqlalchemy.org/en/14/orm/session_api.html#sqlalchemy.orm.Session.execute
 		# https://docs.sqlalchemy.org/en/14/core/connections.html#sqlalchemy.engine.Result
-		IdPassagem = sessao.execute(text("SELECT idPassagem FROM passagem WHERE idVoo = :idVoo AND dataPesquisa = :dataPesquisa"), parametros).first()
+		IdPassagem = sessao.execute(text("SELECT idPassagem FROM passagem WHERE idVoo = :idVoo AND dataPesquisa = :dataPesquisa AND companhia = :companhia"), parametros).first()
 
 		if IdPassagem == None:
 			print('Passagem não encontrada!')
