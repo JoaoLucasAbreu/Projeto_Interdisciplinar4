@@ -57,6 +57,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="col-sm-8">
 		<div class="card shadow mb-4" style="height: 500px;">
 			<!--tabela -->
@@ -156,7 +157,6 @@
 			return;
 
 		$("#chartContainer").html('<canvas id="myAreaChart"></canvas>');
-		$("#chartPieContainer").html('<canvas id="myPieChart"></canvas>');
 
 		Swal.wait();
 
@@ -173,6 +173,7 @@
 			atualizando = false;
 			Swal.close();
 
+			
 			var ctx = document.getElementById("myAreaChart");
 			var myLineChart = new Chart(ctx, {
 				type: 'line',
@@ -181,13 +182,15 @@
 					datasets: [{
 						label: 'GOL',
 						yAxisID: 'GOL',
-						borderColor: 'rgb(255, 159, 64)',
-      					backgroundColor: 'rgba(255, 159, 64, 0.2)',
+						borderColor: 'rgb(252, 82, 3)',
+      					backgroundColor: 'rgba(255, 159, 64, 0.2)' ,
 						data: dados.valoresGol
+						//7, 3, 13
+						// 'rgb(255, 159, 64)'
 					  }, {
 						label: 'LATAM',
 						yAxisID:'GOL',
-						borderColor: 'rgb(53, 162, 235)',
+						borderColor: 'rgb(36, 33, 148)',
       					backgroundColor: 'rgba(53, 162, 235, 0.5)',
 						data: dados.valoresLatam
 					  }]
@@ -275,55 +278,55 @@
 			atualizando = false;
 			Swal.error("Erro de rede ao atualizar o gráfico: " + ex.message);
 		}
-
-		Swal.wait();
-
-		try {
-			const response = await fetch("/api/voo/top5")
-
-			if (!response.ok) {
-				atualizando = false;
-				Swal.error("Ocorreu um erro ao atualizar o gráfico");
-				return;
-			}
-			
-			const dados2 = await response.json();
-			//console.log(dados.labels);
-
-			atualizando = false;
-			Swal.close();
-
-			var ctx = document.getElementById("myPieChart");
-			var myPieChart = new Chart(ctx, {
-				type: 'doughnut',
-  				data: {labels: dados2.siglas,
-				  datasets: [{
-					//label: 'My First Dataset',
-					data: dados2.preco,
-					backgroundColor: [
-					'rgba(255, 159, 64, 0.5)',
-					'rgba(255, 205, 86, 0.5)',
-					'rgba(75, 192, 192, 0.5)',
-					'rgba(54, 162, 235, 0.5)',
-					'rgba(153, 102, 255, 0.5)'
-					],
-					borderColor: [
-					'rgb(255, 159, 64)',
-					'rgb(255, 205, 86)',
-					'rgb(75, 192, 192)',
-					'rgb(54, 162, 235)',
-					'rgb(153, 102, 255)'
-					],
-					hoverOffset: 4
-				  }]},
-				
-			});
-
-		} catch (ex) {
-			atualizando = false;
-			Swal.error("Erro de rede ao atualizar o gráfico: " + ex.message);
-		}
+		//Swal.wait();	
 	}
 
 	atualizarGrafico();
 </script>
+
+
+$("#chartPieContainer").html('<canvas id="myPieChart"></canvas>');
+try {
+		const response = await fetch("/api/voo/top")
+
+		if (!response.ok) {
+			//atualizando = false;
+			Swal.error("Ocorreu um erro ao atualizar o gráfico maluco");
+			return;
+		}
+		
+		const dados2 = await response.json();
+
+		//atualizando = false;
+		Swal.close();
+
+		var ctx = document.getElementById("myPieChart");
+		var myPieChart = new Chart(ctx, {
+			type: 'doughnut',
+			  data: {labels: dados2.siglas,
+			  datasets: [{
+				//label: 'My First Dataset',
+				data: dados2.preco,
+				backgroundColor: [
+				'rgba(255, 159, 64, 0.5)',
+				'rgba(255, 205, 86, 0.5)',
+				'rgba(75, 192, 192, 0.5)',
+				'rgba(54, 162, 235, 0.5)',
+				'rgba(153, 102, 255, 0.5)'
+				],
+				borderColor: [
+				'rgb(255, 159, 64)',
+				'rgb(255, 205, 86)',
+				'rgb(75, 192, 192)',
+				'rgb(54, 162, 235)',
+				'rgb(153, 102, 255)'
+				],
+				hoverOffset: 4
+			  }]},
+			
+		});
+
+	} catch (ex) {
+		//atualizando = false;
+		Swal.error("Erro de rede ao atualizar o gráfico: " + ex.message);
+	}

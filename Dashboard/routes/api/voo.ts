@@ -63,22 +63,17 @@ class VooApiRoute {
 		res.json(dados);
 	}
 
-	public static async top5(req: app.Request, res: app.Response) {
+	public static async top( res: app.Response) {
 		let valores = null
-		//let labels = null
-		const iddestino = parseInt(req.query["d"] as string) || 0;
-		const companhia = req.query["c"] || "";
 
 		await sql.connect(async (sql) => {
-			//labels = await sql.query('select distinct DATE_FORMAT(dataPesquisa,"%e/%m") AS dataPesquisa from passagem  where companhia = ? and idVoo = ? ' ,[companhia,iddestino]) as [] ;
-			valores = await sql.query("select media from passagem where companhia = ? and idVoo = ? ", [companhia,iddestino]) as [] ; 
+			valores = await sql.query("select p.media, v.destino, v.destinoSigla from passagem INNER JOIN voo ON p.idVoo = v.idVoo "); 
 		});
 
 		let dados = {
-			preco: valores.map( x => x.preco),
+			preco: valores.map( x => x.media),
 			siglas: valores.map( x => x.destinoSigla),
-			destinos: valores.map( x => x.destibo),
-			
+			destinos: valores.map( x => x.destino),			
 		};
 		
 		res.json(dados);
