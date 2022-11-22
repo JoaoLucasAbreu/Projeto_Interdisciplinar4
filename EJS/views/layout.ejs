@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title><%=((typeof titulo === "undefined" || !titulo) ? "Projeto" : (titulo + " - Projeto")) %></title>
+
+		<!-- jQuery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+	<!-- Bootstrap 4 -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	<%- defineContent("styles") %>
+	<link rel="stylesheet" href="/public/CSS/style.css">
+	<link rel="stylesheet" href="/public/CSS/roadmap.css">
+	<%- defineContent("pos-styles") %>
+</head>
+<body>
+	<header>
+		<div>
+			<img src="/public/IMGS/airplane-1755.svg" style="max-width: 50px;">
+			<a href="#" class="logo">Quando eu voo</a>
+		</div>
+      <div class="menu-btn"></div>
+      <nav> 
+          <div class="menu">
+            <a href="/">Home</a>
+            <a href="/upload">Dashboard</a>
+            <a href="/about">Sobre nós</a>
+		</div>
+      </nav>
+    </header>
+
+	<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLoginLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalLoginLabel">Perfil</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<ul class="nav nav-pills" id="tabLogin" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" id="home-tab" data-toggle="pill" href="#home" role="tab" aria-controls="home" aria-selected="true">Entrar</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="profile-tab" data-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Criar uma conta</a>
+						</li>
+					</ul>
+					<div class="tab-content" id="myTabContent" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+						<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+							<p class="material-icons icon-entrar">account_circle</p>
+							<input type="text" placeholder="E-mail ou Apelido" class="mg">
+							<input type="password" placeholder="Senha" class="mg">
+							<div class="button-wrapper" data-tippy-content="Click to copy button 64">
+								<button class="button-64" role="button">
+									<span class="text">Entrar</span>
+								</button>
+							</div>
+						</div>
+
+						<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+							<p class="material-icons icon-entrar">person_add_alt_1</p>
+							<input type="text" placeholder="Nome" class="mg" style="display: inline-block;" id="nome">
+							<input type="text" placeholder="Sobrenome" class="mg" id="sobrenome" style="display: inline-block;">
+							<input type="text" placeholder="Apelido" class="mg" id="apelido">
+							<input type="text" placeholder="E-mail" class="mg" id="email">
+							<input type="password" placeholder="Senha" class="mg" id="senha">
+							<input type="password" placeholder="Confimação de senha" class="mg">
+							
+							<div class="button-wrapper" data-tippy-content="Click to copy button 64">
+								<button class="button-64" type="button" onclick="criarUsuario()">
+									<span class="text">Cadastrar</span>
+								</button>
+							</div>
+
+						</div>
+					</div>
+
+
+				</div>
+				<!--
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div> -->
+			</div>
+		</div>
+	</div>
+
+	<%- body %>
+
+	<%- defineContent("scripts") %>
+    <script src="/public/JS/menu.js"></script>
+
+</body>
+</html>

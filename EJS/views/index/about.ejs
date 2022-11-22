@@ -1,0 +1,259 @@
+﻿<h1 class="h1-text">
+    <i class="fa fa-users" aria-hidden="true"></i>Integrantes
+</h1>
+<div class="container" style="align-self: center">
+    <div class="row" style="align-items: center">
+        <div class="col-sm-3">
+            <div class="box" style="width:275px ">
+                <div class="top-bar"></div>
+                <div class="top">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    <input type="checkbox" class="heart-btn" id="heart-btn-1">
+                    <label class="heart" for="heart-btn-1"></label>
+                </div>
+                <div class="content">
+                    <img src="/public/IMGS/INTEGRANTES/jhon.png" style="width: 150px; height: 150px; border-radius: 20px; margin: 30px; margin-bottom: 0;">
+                    <strong>João Lucas Abreu</strong>
+                    <p style="font-size: 12px">joaolucasabreunogueira@gmail.com</p>
+                </div>
+                <div class="btn">
+                    <a href="https://www.linkedin.com/in/jo%C3%A3o-lucas-abreu-nogueira-399539201/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i>Linkedin</a>
+                    <a href="https://github.com/JoaoLucasAbreu" target="_blank""><i class="fa fa-github" aria-hidden="true"></i>Github</a>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="box" style="width:275px ">
+                <div class="top-bar"></div>
+                <div class="top">
+                    <div>
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="heart-btn" id="heart-btn-2">
+                        <label class="heart" for="heart-btn-2"></label>
+                    </div>
+                </div>
+                <div class="content">
+                    <img src="/public/IMGS/INTEGRANTES/dalla.png" style="width: 150px; height: 150px; border-radius: 20px; margin: 30px; margin-bottom: 0;">
+                    <strong>Henrique Dalla Cort</strong>
+                    <p style="font-size: 12px">henriquedallacort@hotmail.com</p>
+                </div>
+                <div class="btn">
+                    <a href="https://www.linkedin.com/in/henriquedallacort/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i>Linkedin</a>
+                    <a href="https://github.com/henriquehdc" target="_blank""><i class="fa fa-github" aria-hidden="true"></i>Github</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="box" style="width: 275px ">
+                <div class="top-bar"></div>
+                <div class="top">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    <input type="checkbox" class="heart-btn" id="heart-btn-3">
+                    <label class="heart" for="heart-btn-3"></label>
+                </div>
+                <div class="content">
+                    <img src="/public/IMGS/INTEGRANTES/be.jpeg" style="width: 150px; height: 150px; border-radius: 20px; margin: 30px; margin-bottom: 0;">
+                    <strong>Bernardo César de Figueiredo</strong>
+                    <p style="font-size: 12px">bernardocesar2002@gmail.com</p>
+                </div>
+                <div class="btn">
+                    <a href="https://www.linkedin.com/in/bernardo-c%C3%A9sar-de-figueiredo-a253011b1/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i>Linkedin</a>
+                    <a href="https://github.com/BernardoCesar" target="_blank""><i class="fa fa-github" aria-hidden="true"></i>Github</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="box" style="width:275px ">
+                <div class="top-bar"></div>
+                <div class="top">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    <input type="checkbox" class="heart-btn" id="heart-btn-4">
+                    <label class="heart" for="heart-btn-4"></label>
+                </div>
+                <div class="content">
+                    <img src="/public/IMGS/INTEGRANTES/zafs.png" style="width: 150px; height: 150px; border-radius: 20px; margin: 30px; margin-bottom: 0;">
+                    <strong>Fernando Zafani Gomes Filho</strong>
+                    <p style="font-size: 12px">zafani07@gmail.com</p>
+                </div>
+                <div class="btn">
+                    <a href="https://www.linkedin.com/in/fernandozafani/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i>Linkedin</a>
+                    <a href="https://github.com/fernandozafani" target="_blank""><i class="fa fa-github" aria-hidden="true"></i>Github</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+<%- contentFor("pos-styles") %>
+<style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+    *{
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+    
+    body{
+        width: 100%;
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    a{
+        text-decoration: none;
+    }
+    
+    
+    .h1-text{
+        font-size: 1.3rem;
+        color: #e0e0e0;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .h1-text i{
+        background-color: #509bfc;
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        box-shadow: 2px 5px 30px rgba(80, 123, 252, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        margin: 0 20px;
+    }
+    
+     .container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    } 
+    
+    
+    .box{
+        position: relative;
+        min-width: 250px;
+        background-color: #fff;
+        box-shadow: 2px 3px 30px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        margin: 20px;
+        position: relative;
+        border-radius: 10px;
+    }
+    
+    
+    .top-bar{
+        width: 50%;
+        height: 4px;
+        background: #507bfc;
+        position: absolute;
+        top: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 0px 0px 10px 10px;
+    }
+    
+    .top{
+        display: flex;
+        justify-content: space-between;
+        align-items:center ;
+        width: 100%;
+    }
+    
+    .fa-check-circle{
+        color: #17b667;
+    }
+    
+    /* creating heart */
+     .heart{
+        color: rgba(155,155,155);
+    }
+    .heart::before{
+        content: '\f004';
+        font-family: fontawesome;
+        line-height: 30px;
+        cursor: pointer;
+        z-index: 1;
+        transition: all 0.3s;
+    }
+    .box .heart-btn:checked ~ .heart::before{
+        color:#e41934
+    }
+    .heart-btn{
+        position: absolute;
+        top: 25px;
+        right: 20px;
+        padding: 1rem;
+        display: none;
+    }
+    
+    
+    .content img{
+        width: 90px;
+        height: 90px;
+        border-radius:100px;
+        overflow: hidden;
+        object-fit: cover;
+        object-position: top;
+    }
+    .content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .content strong{
+        font-size: 13px;
+        font-weight: 500;
+        color: #141414;
+        margin-top: 10px;
+    }
+    .content p{
+        font-size: 0.9rem;
+        color: #7a7a7a;
+        margin: 4px 0px 10px 0px;
+        cursor: pointer;
+    }
+    .content p:hover{
+        text-decoration: underline;
+    }
+    
+    .btn{
+        margin-top: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .btn a i{
+        margin-right: 9px;
+    }
+    .btn a{
+        border-radius: 20px;
+        color: #8b8b8b;
+        padding: 8px 20px;
+        font-size: 0.9rem;
+    }
+    .btn a:hover{
+        color: #fff;
+        box-shadow: 2px 5px 15px rgba(80,123,252,0.05);
+        background-color: #507bfc;
+        transition: all ease 0.5s;
+    }
+
+</style>

@@ -1,0 +1,161 @@
+<h1>Explore</h1>
+
+<h2>Conheça nossos diferentes artistas</h2>
+
+<h3>Pinturas</h3>
+
+<div class="glide espacamento" id="glide1">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        <%
+        for (let i = 0; i < artes.length; i++) {
+          if (artes[i].tema == "Pinturas") {
+      %>
+      <li class="glide__slide"> <div class="imagem-galeria" style="background-image: url(/public/IMGS/artes/arte<%= artes[i].id_arte %>.jpg)"></div>
+
+      <%
+          }
+        }
+      %></ul>
+    </div>
+    <div class="glide__arrows" data-glide-el="controls">
+      <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
+      <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
+    </div>
+  </div>
+
+  <h3>Arte Digital</h3>
+
+  <div class="glide espacamento" id="glide2">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        <%
+        for (let i = 0; i < artes.length; i++) {
+          if (artes[i].tema == "Arte Digital") {
+      %>
+      <li class="glide__slide"> <div class="imagem-galeria" style="background-image: url(/public/IMGS/artes/arte<%= artes[i].id_arte %>.jpg)"></div>
+
+      <%
+          }
+        }
+      %></ul>
+    </div>
+    <div class="glide__arrows" data-glide-el="controls">
+      <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
+      <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
+    </div>
+  </div>
+
+  <h3>Fotografia</h3>
+  <div class="glide espacamento" id="glide3">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        <%
+          for (let i = 0; i < artes.length; i++) {
+            if (artes[i].tema == "Fotografia") {
+        %>
+        <li class="glide__slide"> <div class="imagem-galeria" style="background-image: url(/public/IMGS/artes/arte<%= artes[i].id_arte %>.jpg)"></div>
+
+        <%
+            }
+          }
+        %>
+      </ul>
+    </div>
+    <div class="glide__arrows" data-glide-el="controls">
+      <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
+      <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
+    </div>
+  </div>
+
+  <h3>3D</h3>
+  <div class="glide espacamento" id="glide4">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        <%
+          for (let i = 0; i < artes.length; i++) {
+            if (artes[i].tema == "3D") {
+        %>
+        <li class="glide__slide"> <div class="imagem-galeria" style="background-image: url(/public/IMGS/artes/arte<%= artes[i].id_arte %>.jpg)"></div>
+
+        <%
+            }
+          }
+        %>
+      </ul>
+    </div>
+    <div class="glide__arrows" data-glide-el="controls">
+      <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
+      <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
+    </div>
+  </div>
+
+
+<%- contentFor("styles") %>
+<link rel="stylesheet" href="/public/glide-3.4.1/dist/css/glide.core.min.css" />
+<link rel="stylesheet" href="/public/glide-3.4.1/dist/css/glide.theme.min.css" />
+
+<%- contentFor("scripts") %>
+<script src="/public/glide-3.4.1/dist/glide.min.js"></script>
+
+<script>
+const config={
+  type: "carousel",
+  focusAt: "center",
+  perView: 3,
+  startAt:1,
+  
+}
+new Glide("#glide3", config).mount();
+new Glide("#glide1", config).mount();
+new Glide("#glide2", config).mount();
+new Glide("#glide4", config).mount();
+
+</script>
+
+<%- contentFor("pos-styles") %>
+<style type="text/css">
+h1 {
+    opacity: 1;
+    font-size: 3.7em;
+    background: linear-gradient(to right, hotpink, rgb(255, 255, 255));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    padding-left: 50px;
+}
+
+ h2 {
+    opacity: 0.7;
+    font-size: 2.7em;
+    background: linear-gradient(to right, rgb(112, 215, 255), rgb(255, 255, 255));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    padding-left: 50px;
+    padding-bottom: 25px;
+}
+h3 {
+    opacity: 0.5;
+    margin-bottom: 3px;
+    font-size: 1.7em;
+    background: linear-gradient(to right, rgb(159, 61, 252), rgb(255, 255, 255));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    padding-left: 25px;
+    padding-bottom: 10px;
+}
+
+img{
+  max-width: 100%;
+}
+
+.espacamento{
+  padding-bottom: 20px;
+}
+
+</style>
