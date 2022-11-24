@@ -82,7 +82,7 @@ def main(lista):
 		dataVoo = '2022-12-01'
 		dataPesquisa = datetime.datetime.now().date()
 		inserirPassagem(idVoo,companhia,valor_final,dataVoo,str(dataPesquisa))
-		idPassagem = obterIdPassagem(idVoo, str(dataPesquisa))
+		idPassagem = obterIdPassagem(idVoo, str(dataPesquisa),companhia)
 
 		i = maiorI 
 		time.sleep(10)
