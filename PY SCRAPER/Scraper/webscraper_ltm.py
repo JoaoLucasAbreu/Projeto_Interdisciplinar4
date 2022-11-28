@@ -92,13 +92,13 @@ def main(lista):
 			media = (maior + menor)/2
 		else:
 			media = 0
-
+		
 		dataVoo = '2022-12-01'
 		companhia = 'LATAM'
 		dataPesquisa = datetime.datetime.now().date()
 
 		inserirPassagem(idVoo,companhia,media,dataVoo,str(dataPesquisa))	
-		idPassagem = obterIdPassagem(idVoo, str(dataPesquisa))
+		idPassagem = obterIdPassagem(idVoo, str(dataPesquisa), companhia)
 
 		print('-------------\n' +
         	  f'{destinos}\n' +

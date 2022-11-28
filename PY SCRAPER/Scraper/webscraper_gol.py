@@ -80,7 +80,7 @@ def main(lista):
 		companhia = 'GOL'
 		dataPesquisa = datetime.datetime.now().date()
 		inserirPassagem(idVoo,companhia,media,dataVoo,str(dataPesquisa))	
-		idPassagem = obterIdPassagem(idVoo, str(dataPesquisa))
+		idPassagem = obterIdPassagem(idVoo, str(dataPesquisa),companhia)
 
 		print('-------------\n' +
         	  f'{destinos}\n' +
