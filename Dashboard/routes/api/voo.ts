@@ -63,21 +63,40 @@ class VooApiRoute {
 		res.json(dados);
 	}
 
-	public static async top( res: app.Response) {
-		let valores = null
+	public static async regioes( res: app.Response) {
+		let preco = null
+		let regioes = null
 
 		await sql.connect(async (sql) => {
-			valores = await sql.query("select p.media, v.destino, v.destinoSigla from passagem INNER JOIN voo ON p.idVoo = v.idVoo "); 
+			preco = await sql.query("SELECT avg(passagem.media) as preco FROM passagem INNER JOIN voo on passagem.idVoo = voo.idVoo GROUP BY voo.regiao;"); 
+			regioes = await sql.query("SELECT voo.regiao FROM passagem INNER JOIN voo on passagem.idVoo = voo.idVoo GROUP BY voo.regiao;"); 
 		});
 
 		let dados = {
-			preco: valores.map( x => x.media),
-			siglas: valores.map( x => x.destinoSigla),
-			destinos: valores.map( x => x.destino),			
+			regioes: regioes.map( x => x.regiao),
+			preco: preco.map( x => x.preco),		
 		};
 		
 		res.json(dados);
 	}
+
+	public static async regioes_media( res: app.Response) {
+		
+		let regioes_media = null;
+
+		await sql.connect(async (sql) => {
+			regioes_media = await sql.query("SELECT voo.regiao as regiao, avg(passagem.media) as preco FROM passagem INNER JOIN voo on passagem.idVoo = voo.idVoo GROUP BY voo.regiao;") ; 
+
+		});
+	
+		let dados = {
+			regioes: regioes_media.map( x => x.regiao),
+			preco: regioes_media.map( x => x.preco),		
+		};
+
+		res.json(dados);
+	}
+
 }
 
 export = VooApiRoute;

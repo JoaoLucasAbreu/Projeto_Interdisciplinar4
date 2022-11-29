@@ -31,3 +31,8 @@ SQL:
     WHERE tp_passagem.tipoPassagem = "MAIOR" and  passagem.dataPesquisa = "2022-10-19"
     ORDER BY tp_passagem.preco DESC
     LIMIT 5;
+
+    SELECT voo.regiao, avg(passagem.media)
+    FROM passagem
+    INNER JOIN voo on passagem.idVoo = voo.idVoo
+    GROUP BY voo.regiao;

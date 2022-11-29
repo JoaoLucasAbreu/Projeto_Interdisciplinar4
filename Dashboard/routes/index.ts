@@ -9,6 +9,7 @@ class IndexRoute {
 		} else {
 			let maiores: any[];
 			let destinos: any[];
+			
 			await app.sql.connect(async (sql) => {
 				destinos = await sql.query("SELECT idVoo, destino FROM voo ORDER BY destino ASC");
 				maiores = await sql.query('SELECT distinct passagem.media, voo.destino, voo.destinoSigla FROM passagem INNER JOIN voo ON passagem.idVoo = voo.idVoo group by voo.destino ORDER BY passagem.media DESC');
@@ -19,6 +20,10 @@ class IndexRoute {
 				passagens = await sql.query("SELECT voo.destino, tp_passagem.preco, tp_passagem.tipoPassagem, tp_passagem.hSaida, tp_passagem.duracao, passagem.companhia, passagem.dataPesquisa FROM passagem INNER JOIN voo ON passagem.idVoo = voo.idVoo INNER JOIN tp_passagem ON passagem.idPassagem = tp_passagem.idPassagem WHERE tp_passagem.tipoPassagem = ? and passagem.dataPesquisa = ?", ["MENOR","2022-10-19"]) as [] ; 
 			});
 
+			let regioes_media: any[];
+			await app.sql.connect(async (sql) => {
+				regioes_media = await sql.query("SELECT voo.regiao as regiao, avg(passagem.media) as preco FROM passagem INNER JOIN voo on passagem.idVoo = voo.idVoo GROUP BY voo.regiao;"); 
+			});
 
 			res.render("index/index", {
 				layout: "layout-sem-form",
@@ -26,7 +31,8 @@ class IndexRoute {
 				usuario: u,
 				destinos: destinos,
 				passagens: passagens,
-				maiores: maiores
+				maiores: maiores,
+				regioes_media: regioes_media
 			});
 		}
 	}
