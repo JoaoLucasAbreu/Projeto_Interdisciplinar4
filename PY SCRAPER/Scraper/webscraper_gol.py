@@ -78,7 +78,7 @@ def main(lista):
 			
 		dataVoo = '2022-12-01'
 		companhia = 'GOL'
-		dataPesquisa = '2022-11-24'
+		dataPesquisa = datetime.datetime.now().date()
 		inserirPassagem(idVoo,companhia,media,dataVoo,str(dataPesquisa))	
 		idPassagem = obterIdPassagem(idVoo, str(dataPesquisa),companhia)
 
