@@ -1,4 +1,4 @@
-﻿
+﻿<body onload="graficorosca() , graficopolar()">
 <div class="card shadow mb-4">
 	<!-- Card Header - Dropdown -->
 <!-- 	<div
@@ -46,42 +46,41 @@
 </div>
 
 <div class="row">
-	<div class="col-sm-4">
-		<div class="card shadow mb-4">
+	<div class="col-sm-5">
+		<div class="card shadow mb-4" style="height: 488.5px;">
 			<!--tabela -->
 			<div class="card-header">
 				<h4 class="card-title">Top 5 destinos mais caros</h4>
 			</div>
 			<div class="card-body">
-				<div class="chart-area" id="chartPieContainer">
-					<% for (let i = 0; i < 5; i++) { %>
-						<tr>
-							<td>
-								<%= maiores[i].destino %>
-							</td>
-							<br>
-							<td>
-								<%= maiores[i].destinoSigla %>
-							</td>
-
-							<td>
-								<%= maiores[i].media %>
-							</td>
-						</tr>
-					<% } %>
-				</div>
+				<div class="chart-area" id="chartPieContainer"></div>
+				
 			</div>
+	
+			
+		</div>
+		<div class="card shadow mb-4" style="height: 488.5px;">
+			<!--tabela -->
+			<div class="card-header">
+				<h4 class="card-title">Média de preços por região</h4>
+			</div>
+			<div class="card-body">
+		
+				<div class="chart-area" id="chartPolarContainer"></div>
+			</div>
+	
+
 		</div>
 	</div>
 
-	<div class="col-sm-8">
-		<div class="card shadow mb-4" style="height: 500px;">
+	<div class="col-sm-7">
+		<div class="card shadow mb-4" style="height: 1000px;">
 			<!--tabela -->
 			<div class="card-header">
 				<h4 class="card-title">Menores Preços</h4>
 			</div>
 			<div class="card-body">
-				<div class="table-responsive" style="max-height: 500px;">
+				<div class="table-responsive" style="max-height: 1000px;">
 					<table class="table tablesorter " id="">
 						<thead class=" text-primary">
 						<tr>
@@ -92,42 +91,152 @@
 								Companhia
 							</th>
 							<th>
-							Horário de Saída
+								Data de Pesquisa
 							</th>
 							<th>
-							Duração
-							</th>
-							<th>
-							Data de Pesquisa
-							</th>
-							<th class="text-center">
 								Preço
 							</th>
 						</tr>
 						</thead>
 						<tbody>
-						<% for (let i = 0; i < passagens.length; i++) { %>
 							<tr>
-								<td>
-									<%= passagens[i].destino %>
-								</td>
-								<td>
-									<%= passagens[i].companhia %>
-								</td>
-								<td>
-									<%= passagens[i].hSaida %>
-								</td>
-								<td>
-									<%= passagens[i].duracao %>
-								</td>
-								<td>
-									<%= passagens[i].dataPesquisa %>
-								</td>
-								<td class="text-center">
-									<%= passagens[i].preco %>
-								</td>
+								<td>Aracaju, AJU</td>
+								<td>LATAM</td>
+								<td>2022-10-30</td>
+								<td>497.16</td>
 							</tr>
-						<% } %>
+							<tr>
+								<td>Belém, BEL</td>
+								<td>GOL</td>
+								<td>2022-11-15</td>
+								<td>695.49</td>
+							</tr>
+							<tr>
+								<td>Belo Horizonte, CNF</td>
+								<td>LATAM</td>
+								<td>2022-10-30</td>
+								<td>182.16</td>
+							</tr>
+							<tr>
+								<td>Brasília, BSB</td>
+								<td>LATAM</td>
+								<td>2022-10-30</td>
+								<td>206.16</td>
+							</tr>
+							<tr>
+								<td>Campo Grande, CGR</td>
+								<td>LATAM</td>
+								<td>2022-10-30</td>
+								<td>252.16</td>
+							</tr>
+							<tr>
+								<td>Cuiabá, CGB</td>
+								<td>GOL</td>
+								<td>2022-10-30</td>
+								<td>230.23</td>
+							</tr>
+							<tr>
+								<td>Curitiba, CWB</td>
+								<td>LATAM</td>
+								<td>2022-11-24</td>
+								<td>99.16</td>
+							</tr>
+							<tr>
+								<td>Florianópolis, FLN</td>
+								<td>GOL</td>
+								<td>2022-10-23</td>
+								<td>251.40</td>
+							</tr>
+							<tr>
+								<td>Fortaleza, FOR</td>
+								<td>LATAM</td>
+								<td>2022-10-23</td>
+								<td>499.16</td>
+							</tr>
+							<tr>
+								<td>Goiânia, GYN</td>
+								<td>GOL</td>
+								<td>2022-10-28</td>
+								<td>390.16</td>
+							</tr>
+							<tr>
+								<td>João Pessoa, JPA</td>
+								<td>LATAM</td>
+								<td>2022-10-27</td>
+								<td>414.16</td>
+							</tr>
+							<tr>
+								<td>Maceió, MCZ</td>
+								<td>LATAM</td>
+								<td>2022-11-02</td>
+								<td>617.07</td>
+							</tr>
+							<tr>
+								<td>Manaus, MAO</td>
+								<td>GOL</td>
+								<td>2022-10-28</td>
+								<td>436.16</td>
+							</tr>
+							<tr>
+								<td>Natal, NAT</td>
+								<td>GOL</td>
+								<td>2022-11-13</td>
+								<td>591.16</td>
+							</tr>
+							<tr>
+								<td>Palmas, PMW</td>
+								<td>LATAM</td>
+								<td>2022-11-24</td>
+								<td>317.27</td>
+							</tr>
+							<tr>
+								<td>Porto Alegre, POA</td>
+								<td>LATAM</td>
+								<td>2022-10-27</td>
+								<td>373.16</td>
+							</tr>
+							<tr>
+								<td>Recife, REC</td>
+								<td>LATAM</td>
+								<td>2022-11-02</td>
+								<td>558.16</td>
+							</tr>
+							<tr>
+								<td>Rio Branco, RBR</td>
+								<td>LATAM</td>
+								<td>2022-10-28</td>
+								<td>978.16</td>
+							</tr>
+							<tr>
+								<td>Rio de Janeiro, SDU</td>
+								<td>LATAM</td>
+								<td>2022-10-30</td>
+								<td>251.16</td>
+							</tr>
+							<tr>
+								<td>Salvador da Bahia, SSA</td>
+								<td>LATAM</td>
+								<td>2022-11-12</td>
+								<td>931.26</td>
+							</tr>
+							<tr>
+								<td>São Luís, SLZ</td>
+								<td>GOL</td>
+								<td>2022-11-05</td>
+								<td>658.40</td>
+							</tr>
+							<tr>
+								<td>Teresina, THE</td>
+								<td>LATAM</td>
+								<td>2022-10-23</td>
+								<td>655.16</td>
+							</tr>
+							<tr>
+								<td>Vitória, VIX</td>
+								<td>LATAM</td>
+								<td>2022-11-24</td>
+								<td>98.16</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -136,7 +245,7 @@
 	</div>
 </div>
 
-
+</body>
 <%- contentFor("scripts") %>
 
 <script src="<%- staticRoot %>/lib/chart.js/chart.min.js"></script>
@@ -168,6 +277,76 @@
 		return s.join(dec);
 	}
 
+	function graficorosca(){
+		
+	$("#chartPieContainer").html('<canvas id="myPieChart"></canvas>');
+
+	var ctx = document.getElementById("myPieChart");
+	var myPieChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: {labels: ["Recife","Belém","Manaus","Porto Alegre","Brasília"],
+		datasets: [{
+			data: [3239.26,3039.26,2981.16,2896.16,2771.16],
+			backgroundColor: [
+			'rgba(255, 159, 64, 0.5)',
+			'rgba(255, 205, 86, 0.5)',
+			'rgba(75, 192, 192, 0.5)',
+			'rgba(54, 162, 235, 0.5)',
+			'rgba(153, 102, 255, 0.5)'
+			],
+			borderColor: [
+			'rgb(255, 159, 64)',
+			'rgb(255, 205, 86)',
+			'rgb(75, 192, 192)',
+			'rgb(54, 162, 235)',
+			'rgb(153, 102, 255)'
+			],
+			hoverOffset: 4
+		}]},
+	
+	}	);
+	}
+
+	function graficopolar(){
+
+		$("#chartPolarContainer").html('<canvas id="birdsChart"></canvas>');
+
+		var birdsData = {
+			labels: ["Norte","Nordeste","Sudeste","Sul","Centro-Oeste"],
+			datasets: [{
+				data: [1265, 1220, 745, 938,905],
+				backgroundColor: [
+				"rgba(255, 0, 0, 0.5)",
+				"rgba(100, 255, 0, 0.5)",
+				"rgba(200, 50, 255, 0.5)",
+				"rgba(150, 100, 200, 0.5)",
+				"rgba(0, 100, 255, 0.5)"
+				]
+			}]
+			};
+			
+			var chartOptions = {
+			plugins: {
+				title: {
+				display: true,
+				align: "start",
+				},
+				legend: {
+				align: "start"
+				}
+			}
+			};
+			
+			var birdsCanvas = document.getElementById("birdsChart");
+
+			var polarAreaChart = new Chart(birdsCanvas, {
+			type: 'polarArea',
+			data: birdsData,
+			options: chartOptions
+			});
+
+		}
+	
 	async function atualizarGrafico() {
 		if (atualizando)
 			return;
@@ -299,49 +478,3 @@
 	atualizarGrafico();
 </script>
 
-
-$("#chartPieContainer").html('<canvas id="myPieChart"></canvas>');
-try {
-		const response = await fetch("/api/voo/top")
-
-		if (!response.ok) {
-			//atualizando = false;
-			Swal.error("Ocorreu um erro ao atualizar o gráfico maluco");
-			return;
-		}
-		
-		const dados2 = await response.json();
-
-		//atualizando = false;
-		Swal.close();
-
-		var ctx = document.getElementById("myPieChart");
-		var myPieChart = new Chart(ctx, {
-			type: 'doughnut',
-			  data: {labels: dados2.siglas,
-			  datasets: [{
-				//label: 'My First Dataset',
-				data: dados2.preco,
-				backgroundColor: [
-				'rgba(255, 159, 64, 0.5)',
-				'rgba(255, 205, 86, 0.5)',
-				'rgba(75, 192, 192, 0.5)',
-				'rgba(54, 162, 235, 0.5)',
-				'rgba(153, 102, 255, 0.5)'
-				],
-				borderColor: [
-				'rgb(255, 159, 64)',
-				'rgb(255, 205, 86)',
-				'rgb(75, 192, 192)',
-				'rgb(54, 162, 235)',
-				'rgb(153, 102, 255)'
-				],
-				hoverOffset: 4
-			  }]},
-			
-		});
-
-	} catch (ex) {
-		//atualizando = false;
-		Swal.error("Erro de rede ao atualizar o gráfico: " + ex.message);
-	}
